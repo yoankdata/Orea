@@ -193,15 +193,15 @@ export default function AboutPage() {
 
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {values.map((value, index) => (
-                            <Card key={index} className="bg-white/5 border-white/10 hover:bg-white/10 hover:border-gold/30 transition-all duration-300 hover:-translate-y-1 group">
+                            <Card key={index} className="bg-white/5 border-white/10 hover:bg-white/10 hover:border-gold/50 transition-all duration-500 hover:-translate-y-2 group rounded-2xl">
                                 <CardContent className="p-8 text-center h-full flex flex-col items-center">
-                                    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-gold/20 to-transparent border border-gold/10 group-hover:border-gold/40 transition-colors">
+                                    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-gold/20 to-transparent border border-gold/10 group-hover:border-gold/60 group-hover:scale-110 transition-all duration-300">
                                         <value.icon className="h-7 w-7 text-gold" />
                                     </div>
                                     <h3 className="mb-3 text-xl font-serif font-semibold text-white group-hover:text-gold transition-colors">
                                         {value.title}
                                     </h3>
-                                    <p className="text-gray-400 leading-relaxed text-sm">
+                                    <p className="text-gray-400 leading-relaxed text-sm group-hover:text-gray-300 transition-colors">
                                         {value.description}
                                     </p>
                                 </CardContent>

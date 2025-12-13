@@ -87,27 +87,27 @@ export default async function ProviderProfilePage({ params }: { params: Promise<
     const isPremium = profile.is_premium;
     const initials = profile.full_name.slice(0, 2).toUpperCase();
 
-    // Image de couverture par défaut
-    const coverImage = "/profile-hero.jpg";
+    // Image de couverture : Première image du portfolio OU Défaut
+    const coverImage = profile.portfolio_images?.[0]?.image_url || "/profile-hero.jpg";
 
     return (
         <div className="min-h-screen bg-white font-sans pb-20">
 
             {/* === 1. HERO SECTION === */}
             {/* Hauteur réduite pour éviter l'effet "vide" sur petits écrans */}
-            <div className="relative h-[35vh] lg:h-[45vh] w-full bg-anthracite overflow-hidden">
+            <div className="relative h-[30vh] lg:h-[40vh] w-full bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden">
                 <Image
                     src={coverImage}
-                    alt="Atmosphère salon"
+                    alt="Bannière profil"
                     fill
-                    className="object-cover opacity-60" // Opacité réduite pour que le texte blanc ressorte mieux
+                    className="object-cover opacity-60"
                     priority
                 />
                 {/* Dégradé pour assurer la lisibilité du bouton retour */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
 
                 <div className="absolute top-6 left-4 md:left-8 z-20">
-                    <Button asChild variant="secondary" size="sm" className="rounded-full bg-white/20 backdrop-blur-md text-white border-0 hover:bg-white/30">
+                    <Button asChild variant="secondary" size="sm" className="rounded-full bg-white/20 backdrop-blur-md text-white border-0 hover:bg-white/30 shadow-sm">
                         <Link href="/recherche">
                             <ArrowLeft className="mr-2 h-4 w-4" />
                             Retour
@@ -119,26 +119,26 @@ export default async function ProviderProfilePage({ params }: { params: Promise<
             <div className="container mx-auto px-4 lg:px-8 relative">
 
                 {/* === 2. BLOC IDENTITÉ === */}
-                {/* On remonte moins haut (-mt-16 au lieu de -mt-24) pour éviter les collisions */}
-                <div className="-mt-16 mb-12 flex flex-col md:flex-row items-end gap-6 relative z-10">
+                {/* Avatar plus petit et mieux intégré */}
+                <div className="-mt-12 mb-8 flex flex-col md:flex-row items-end gap-6 relative z-10">
 
                     {/* AVATAR */}
                     <div className="relative shrink-0 mx-auto md:mx-0">
-                        <div className="h-32 w-32 md:h-48 md:w-48 rounded-full p-1 bg-white shadow-xl">
-                            <Avatar className="h-full w-full border-2 border-gray-100">
+                        <div className="h-32 w-32 rounded-full p-1 bg-white shadow-2xl shadow-black/10">
+                            <Avatar className="h-full w-full border border-gray-100">
                                 <AvatarImage src={profile.avatar_url || undefined} className="object-cover" />
                                 <AvatarFallback className="bg-anthracite text-white text-3xl font-serif">{initials}</AvatarFallback>
                             </Avatar>
                         </div>
                         {isPremium && (
-                            <div className="absolute bottom-1 right-1 md:bottom-3 md:right-3 flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-gold text-white shadow-lg border-2 border-white" title="Premium">
-                                <Crown className="h-4 w-4 md:h-5 md:w-5 fill-current" />
+                            <div className="absolute bottom-1 right-1 flex h-8 w-8 items-center justify-center rounded-full bg-gold text-white shadow-lg border-2 border-white" title="Premium">
+                                <Crown className="h-4 w-4 fill-current" />
                             </div>
                         )}
                     </div>
 
                     {/* INFOS PRINCIPALES */}
-                    <div className="flex-1 w-full text-center md:text-left pt-2 md:pt-0">
+                    <div className="flex-1 w-full text-center md:text-left pt-2 md:pt-0 pb-1">
                         <div className="flex flex-col md:flex-row justify-between items-end gap-4">
 
                             <div className="space-y-2 w-full">

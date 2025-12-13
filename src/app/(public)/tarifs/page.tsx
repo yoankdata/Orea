@@ -107,9 +107,9 @@ export default function PricingPage() {
                     <div className="grid gap-8 lg:grid-cols-2 max-w-5xl mx-auto items-start">
 
                         {/* Offre Gratuite */}
-                        <Card className="relative border-border/50 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
-                            <CardHeader className="pb-8 border-b border-border/50 bg-surface/30">
-                                <CardTitle className="font-serif text-2xl text-anthracite">Starter</CardTitle>
+                        <Card className="relative border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden rounded-2xl hover:border-gold/20 group">
+                            <CardHeader className="pb-8 border-b border-border/50 bg-gray-50/30">
+                                <CardTitle className="font-serif text-2xl text-anthracite group-hover:text-gold transition-colors">Starter</CardTitle>
                                 <CardDescription className="text-base">
                                     Idéal pour démarrer et créer votre présence en ligne.
                                 </CardDescription>
@@ -137,7 +137,7 @@ export default function PricingPage() {
                                                     {feature.name}
                                                 </span>
                                                 {typeof feature.free === "string" && (
-                                                    <span className="ml-1.5 inline-block rounded-md bg-surface px-2 py-0.5 text-xs font-medium text-anthracite border border-border">
+                                                    <span className="ml-1.5 inline-block rounded-md bg-white border border-border px-2 py-0.5 text-xs font-medium text-anthracite shadow-sm">
                                                         {feature.free}
                                                     </span>
                                                 )}
@@ -150,7 +150,7 @@ export default function PricingPage() {
                                 <Button
                                     asChild
                                     variant="outline"
-                                    className="w-full h-12 rounded-full border-2 hover:bg-surface hover:text-anthracite text-base font-medium"
+                                    className="w-full h-12 rounded-full border-2 border-gray-200 hover:border-gold hover:text-gold text-base font-bold bg-transparent transition-all"
                                 >
                                     <Link href="/inscription">Créer mon profil gratuit</Link>
                                 </Button>
@@ -158,7 +158,7 @@ export default function PricingPage() {
                         </Card>
 
                         {/* Offre Premium */}
-                        <Card className="relative border-2 border-gold shadow-2xl shadow-gold/10 scale-100 lg:scale-105 z-10 bg-white overflow-hidden group">
+                        <Card className="relative border-2 border-gold shadow-2xl shadow-gold/15 scale-100 lg:scale-105 z-10 bg-white overflow-hidden rounded-2xl">
                             {/* Fond décoratif subtil */}
                             <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -z-10" />
 
@@ -266,7 +266,7 @@ export default function PricingPage() {
                 <div className="container relative mx-auto px-4">
                     <div className="mx-auto max-w-3xl">
                         <div className="text-center mb-12">
-                            <h2 className="text-3xl font-serif font-bold mb-4">Questions fréquentes</h2>
+                            <h2 className="text-3xl font-serif font-bold mb-4 text-gold">Questions fréquentes</h2>
                             <p className="text-gray-400">Tout ce que vous devez savoir avant de vous lancer.</p>
                         </div>
 

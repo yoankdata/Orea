@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Script from "next/script";
 import { Metadata } from "next";
-import { ArrowRight, Star, Search, Users, Shield, Sparkles } from "lucide-react";
+import { ArrowRight, Star, Search, Users, Shield, Sparkles, Scissors, Palette, Gem, Smile, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -32,40 +32,40 @@ const jsonLd = {
   },
 };
 
-// Catégories principales
+// Catégories principales avec Icônes Lucide et non Emojis
 const categories = [
   {
     id: "coiffure",
     label: "Coiffure",
-    icon: "✂️",
+    icon: Scissors,
     description: "Tresses, tissages, locks",
     count: 120,
   },
   {
     id: "makeup",
     label: "Maquillage",
-    icon: "💄",
+    icon: Palette,
     description: "Maquillage pro & mariée",
     count: 85,
   },
   {
     id: "ongles",
     label: "Ongles",
-    icon: "💅",
+    icon: Gem,
     description: "Manucure & nail art",
     count: 95,
   },
   {
     id: "soins",
     label: "Soins",
-    icon: "🧖‍♀️",
+    icon: Sparkles,
     description: "Spa, massage & soins",
     count: 45,
   },
   {
     id: "barber",
     label: "Barber",
-    icon: "💈",
+    icon: User, // Ou une autre icône plus spécifique si disponible mais User est clean
     description: "Coupe & barbe homme",
     count: 60,
   },
@@ -191,14 +191,14 @@ export default function HomePage() {
                 href={`/recherche?category=${category.id}`}
                 className="group h-full"
               >
-                <div className="flex flex-col items-center justify-center p-6 lg:p-8 rounded-[2rem] bg-gray-50/50 border border-transparent hover:border-gold/10 hover:bg-white hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] transition-all duration-500 cursor-pointer h-full group-hover:-translate-y-1 relative overflow-hidden">
+                <div className="flex flex-col items-center justify-center p-6 lg:p-8 rounded-[2rem] bg-gray-50/50 border border-transparent hover:border-gold/20 hover:bg-white hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] transition-all duration-500 cursor-pointer h-full group-hover:-translate-y-1 relative overflow-hidden">
                   {/* Fond subtil au survol */}
                   <div className="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  <div className="text-4xl lg:text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 relative z-10">
-                    {category.icon}
+                  <div className="mb-6 transform group-hover:scale-110 transition-transform duration-500 text-muted-foreground/50 group-hover:text-gold opacity-80 group-hover:opacity-100 relative z-10">
+                    <category.icon className="section-icon h-10 w-10 md:h-12 md:w-12 stroke-[1.5]" />
                   </div>
-                  <h3 className="font-serif text-lg text-anthracite group-hover:text-gold transition-colors relative z-10 font-medium">
+                  <h3 className="text-lg text-anthracite group-hover:text-gold transition-colors relative z-10 font-bold font-sans">
                     {category.label}
                   </h3>
                 </div>
@@ -229,7 +229,7 @@ export default function HomePage() {
                 <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-xl shadow-gray-100 group-hover:shadow-gold/10 transition-all duration-500 border border-gray-100">
                   <feature.icon className="h-8 w-8 text-gold mt-1 transition-transform group-hover:scale-110 duration-300" />
                 </div>
-                <h3 className="mb-4 font-serif text-2xl text-anthracite group-hover:text-gold transition-colors duration-300">
+                <h3 className="mb-4 text-2xl text-anthracite group-hover:text-gold transition-colors duration-300 font-bold font-sans">
                   {feature.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed max-w-xs font-light text-base">
@@ -242,7 +242,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== STATISTIQUES (Dark Mode Luxe) ===== */}
-      <section className="bg-anthracite py-28 text-white relative overflow-hidden">
+      <section className="bg-[#1A1A1A] py-28 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5 mix-blend-overlay" />
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid gap-12 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
@@ -259,10 +259,10 @@ export default function HomePage() {
       </section>
 
       {/* ===== CTA FINAL (Image Immersive) ===== */}
-      <section className="relative py-40 overflow-hidden flex items-center justify-center bg-black">
-        <div className="absolute inset-0 bg-anthracite">
+      <section className="relative py-40 overflow-hidden flex items-center justify-center bg-[#1A1A1A]">
+        <div className="absolute inset-0 bg-[#1A1A1A]">
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1560066984-12186d3069aa?q=80&w=2874&auto=format&fit=crop')] bg-cover bg-center opacity-30 mix-blend-overlay transition-transform duration-[20s] hover:scale-105" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-[#1A1A1A]" />
         </div>
 
         <div className="container relative mx-auto px-6 text-center z-10 max-w-4xl">

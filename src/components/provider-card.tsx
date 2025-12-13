@@ -40,7 +40,7 @@ export function ProviderCard({ provider }: ProviderCardProps) {
 
     return (
         <Link href={`/prestataire/${provider.slug}`} className="group block h-full">
-            <Card className="h-full border-0 shadow-none bg-transparent hover:bg-white transition-all duration-500 ease-out hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] rounded-2xl overflow-hidden">
+            <Card className="h-full border border-transparent shadow-none bg-transparent hover:bg-white hover:border-gold/20 transition-all duration-500 ease-out hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] rounded-2xl overflow-hidden">
                 <CardContent className="p-4 flex flex-col h-full gap-4">
                     {/* Image / Avatar Aspect Square */}
                     <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-surface/50">
