@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
@@ -20,7 +20,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { supabase } from "@/lib/supabase";
 import type { Profile } from "@/lib/database.types";
 
-// Avantages de l'offre Oréa Gold
+// Avantages de l'offre NUBI GOLD
 const GOLD_FEATURES = [
     {
         icon: Crown,
@@ -50,7 +50,7 @@ const GOLD_FEATURES = [
 ];
 
 /**
- * Page de gestion de l'abonnement Oréa Gold
+ * Page de gestion de l'abonnement NUBI GOLD
  */
 export default function BillingPage() {
     const searchParams = useSearchParams();
@@ -127,7 +127,7 @@ export default function BillingPage() {
                     Mon Abonnement
                 </h1>
                 <p className="text-muted-foreground">
-                    {isPremium ? "Vous êtes membre ORÉA GOLD" : "Débloquez tout le potentiel d'ORÉA"}
+                    {isPremium ? "Vous êtes membre NUBI GOLD" : "Débloquez tout le potentiel d'Maison Nubi"}
                 </p>
             </div>
 
@@ -147,7 +147,7 @@ export default function BillingPage() {
                 </div>
             )}
 
-            {/* Carte Oréa Gold */}
+            {/* Carte NUBI GOLD */}
             <Card className={`relative overflow-hidden border-2 ${isPremium ? 'border-green-500 bg-green-50/30' : 'border-gold'}`}>
                 {/* Badge */}
                 <div className="absolute top-4 right-4">
@@ -172,7 +172,7 @@ export default function BillingPage() {
                             <Crown className="h-6 w-6 text-white" />
                         </div>
                         <div>
-                            <CardTitle className="font-serif text-2xl">ORÉA GOLD</CardTitle>
+                            <CardTitle className="font-serif text-2xl">NUBI GOLD</CardTitle>
                             <CardDescription>
                                 {isPremium ? "Votre abonnement premium est actif" : "L'offre premium pour les pros"}
                             </CardDescription>
@@ -214,7 +214,7 @@ export default function BillingPage() {
                                 Abonnement actif
                             </div>
                             <p className="text-sm text-muted-foreground mt-3">
-                                Merci de faire partie de la communauté ORÉA GOLD !
+                                Merci de faire partie de la communauté NUBI GOLD !
                             </p>
                         </div>
                     ) : (
@@ -259,7 +259,7 @@ export default function BillingPage() {
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li className="flex items-center gap-2">
                                 <Check className="h-4 w-4 text-green-500" />
-                                Profil visible sur ORÉA
+                                Profil visible sur Maison Nubi
                             </li>
                             <li className="flex items-center gap-2">
                                 <Check className="h-4 w-4 text-green-500" />

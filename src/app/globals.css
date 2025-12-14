@@ -1,11 +1,11 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 @import "tw-animate-css";
 
 /* Note: Les Google Fonts sont chargées via next/font dans layout.tsx */
 
 @custom-variant dark (&:is(.dark *));
 
-/* ===== ORÉA DESIGN SYSTEM ===== */
+/* ===== Maison Nubi DESIGN SYSTEM ===== */
 
 @theme inline {
   /* Couleurs sémantiques Tailwind standards */
@@ -28,7 +28,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* === COULEURS ORÉA SPÉCIFIQUES === */
+  /* === COULEURS Maison Nubi SPÉCIFIQUES === */
 
   /* L'Or (Premium) */
   --color-gold: var(--gold);
@@ -63,7 +63,7 @@
   /* Base radius */
   --radius: 0.75rem;
 
-  /* === PALETTE ORÉA === */
+  /* === PALETTE Maison Nubi === */
 
   /* 1. OR (Luxe & Action) */
   --gold: #D4AF37;
@@ -167,7 +167,7 @@
     font-family: 'Lato', sans-serif;
   }
 
-  /* Typographie ORÉA - Titres Luxe */
+  /* Typographie Maison Nubi - Titres Luxe */
   h1,
   h2,
   h3,
@@ -192,7 +192,7 @@
   }
 }
 
-/* === CLASSES UTILITAIRES ORÉA === */
+/* === CLASSES UTILITAIRES Maison Nubi === */
 
 /* 1. Dégradé "Glow" Esthétique (Utiliser sur bg-sections) */
 /* Crée une ambiance douce rose/or sans être kitch */
@@ -249,4 +249,30 @@
   background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
+}
+
+/* 6. Loading Bar Animation */
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 7. Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }

@@ -1,4 +1,4 @@
-import { clsx, type ClassValue } from "clsx"
+﻿import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -33,7 +33,7 @@ export function formatWhatsAppLink(phone: string, customMessage?: string): strin
   }
 
   // Message par défaut
-  const message = customMessage || "Bonjour, je vous ai découvert sur ORÉA et j'aimerais prendre rendez-vous.";
+  const message = customMessage || "Bonjour, je vous ai découvert sur Maison Nubi et j'aimerais prendre rendez-vous.";
 
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
 }

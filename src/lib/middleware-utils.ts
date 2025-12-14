@@ -1,6 +1,21 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+// Routes qui nécessitent une authentification
+const PROTECTED_ROUTES = [
+    "/espace-pro",
+    "/account",
+];
+
+// Routes publiques d'authentification (ne pas rediriger)
+const AUTH_ROUTES = [
+    "/connexion",
+    "/inscription",
+    "/auth",
+    "/login",
+    "/register",
+];
+
 export async function updateSession(request: NextRequest) {
     let supabaseResponse = NextResponse.next({
         request,
@@ -15,7 +30,7 @@ export async function updateSession(request: NextRequest) {
                     return request.cookies.getAll();
                 },
                 setAll(cookiesToSet) {
-                    cookiesToSet.forEach(({ name, value, options }) =>
+                    cookiesToSet.forEach(({ name, value }) =>
                         request.cookies.set(name, value)
                     );
                     supabaseResponse = NextResponse.next({
@@ -35,18 +50,34 @@ export async function updateSession(request: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser();
 
-    // Protection des routes /account
-    if (
-        !user &&
-        !request.nextUrl.pathname.startsWith("/login") &&
-        !request.nextUrl.pathname.startsWith("/auth") &&
-        !request.nextUrl.pathname.startsWith("/register") &&
-        request.nextUrl.pathname.startsWith("/account")
-    ) {
+    const pathname = request.nextUrl.pathname;
+
+    // Vérifier si la route est protégée
+    const isProtectedRoute = PROTECTED_ROUTES.some(route =>
+        pathname.startsWith(route)
+    );
+
+    // Vérifier si c'est une route d'authentification
+    const isAuthRoute = AUTH_ROUTES.some(route =>
+        pathname.startsWith(route)
+    );
+
+    // Rediriger les utilisateurs non connectés vers /connexion
+    if (!user && isProtectedRoute) {
         const url = request.nextUrl.clone();
-        url.pathname = "/login";
+        url.pathname = "/connexion";
+        // Ajouter l'URL de retour pour rediriger après connexion
+        url.searchParams.set("redirect", pathname);
+        return NextResponse.redirect(url);
+    }
+
+    // Rediriger les utilisateurs connectés qui tentent d'accéder aux pages d'auth
+    if (user && isAuthRoute) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/espace-pro";
         return NextResponse.redirect(url);
     }
 
     return supabaseResponse;
 }
+

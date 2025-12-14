@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState, type ReactNode } from "react";
@@ -8,7 +8,7 @@ interface ProvidersProps {
 }
 
 /**
- * Providers globaux de l'application ORÉA
+ * Providers globaux de l'application Maison Nubi
  * - QueryClientProvider pour TanStack Query (data fetching)
  * - Autres providers peuvent être ajoutés ici (Auth, Toast, etc.)
  */

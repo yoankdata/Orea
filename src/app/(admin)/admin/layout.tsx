@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Shield, Users, LogOut, LayoutDashboard, Settings } from "lucide-react";
 import { createClient } from "@/lib/supabase-server";
@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 // Liste des emails autorisés pour l'admin (à configurer)
 const ADMIN_EMAILS = [
-    "admin@orea.ci",
+    "admin@maisonnubi.ci",
     "ykilolo77@gmail.com",
     // Ajouter ton email ici
 ];
@@ -49,7 +49,7 @@ export default async function AdminLayout({
                     <div className="flex items-center gap-3">
                         <Shield className="h-5 w-5 text-gold" />
                         <h1 className="font-serif text-xl font-semibold">
-                            Admin ORÉA
+                            Admin Maison Nubi
                         </h1>
                     </div>
 

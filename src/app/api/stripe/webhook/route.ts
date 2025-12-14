@@ -92,6 +92,55 @@ export async function POST(request: NextRequest) {
             break;
         }
 
+        case "invoice.payment_failed": {
+            // Échec de paiement - Désactiver immédiatement le premium
+            const invoice = event.data.object as Stripe.Invoice;
+            const customerId = invoice.customer as string;
+
+            console.log(`Échec de paiement pour customer: ${customerId}`);
+
+            // Récupérer l'email du client
+            const customer = await stripe.customers.retrieve(customerId);
+            if (customer && !customer.deleted && customer.email) {
+                const { error } = await supabaseAdmin
+                    .from("profiles")
+                    .update({ is_premium: false })
+                    .eq("email", customer.email);
+
+                if (error) {
+                    console.error("Erreur suspension premium après échec paiement:", error);
+                } else {
+                    console.log(`Premium suspendu pour ${customer.email} (échec paiement)`);
+                }
+            }
+            break;
+        }
+
+        case "invoice.paid": {
+            // Paiement réussi (renouvellement) - S'assurer que le premium est actif
+            const invoice = event.data.object as Stripe.Invoice;
+            const customerId = invoice.customer as string;
+
+            // Ne traiter que les factures d'abonnement (pas les achats uniques)
+            // Vérifier si c'est lié à un abonnement via billing_reason
+            if (invoice.billing_reason === "subscription_cycle" || invoice.billing_reason === "subscription_create") {
+                const customer = await stripe.customers.retrieve(customerId);
+                if (customer && !customer.deleted && customer.email) {
+                    const { error } = await supabaseAdmin
+                        .from("profiles")
+                        .update({ is_premium: true })
+                        .eq("email", customer.email);
+
+                    if (error) {
+                        console.error("Erreur réactivation premium:", error);
+                    } else {
+                        console.log(`Premium réactivé/confirmé pour ${customer.email}`);
+                    }
+                }
+            }
+            break;
+        }
+
         default:
             console.log(`Événement non géré: ${event.type}`);
     }

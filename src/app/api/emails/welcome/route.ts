@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { resend, FROM_EMAIL } from '@/lib/resend';
 
 /**
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
         const { error } = await resend.emails.send({
             from: FROM_EMAIL,
             to: email,
-            subject: '✨ Bienvenue sur ORÉA !',
+            subject: '✨ Bienvenue sur Maison Nubi !',
             html: `
 <!DOCTYPE html>
 <html>
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
                     <tr>
                         <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 40px; text-align: center;">
                             <h1 style="margin: 0; font-size: 32px; color: #D4AF37; font-family: Georgia, serif; letter-spacing: 2px;">
-                                ORÉA
+                                Maison Nubi
                             </h1>
                             <p style="margin: 8px 0 0; font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 3px;">
                                 L'annuaire beauté premium
@@ -60,7 +60,7 @@ export async function POST(request: Request) {
                             </h2>
                             
                             <p style="margin: 0 0 24px; font-size: 16px; color: #666666; line-height: 1.6;">
-                                Félicitations ! Votre profil professionnel a été créé avec succès sur ORÉA. 
+                                Félicitations ! Votre profil professionnel a été créé avec succès sur Maison Nubi. 
                                 Vous faites désormais partie de la communauté des meilleurs talents beauté d'Abidjan.
                             </p>
                             
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
                                 </p>
                             </div>
                             
-                            <a href="https://orea.ci/account/profile" style="display: inline-block; background-color: #D4AF37; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 50px; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-top: 16px;">
+                            <a href="https://maisonnubi.ci/account/profile" style="display: inline-block; background-color: #D4AF37; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 50px; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-top: 16px;">
                                 Compléter mon profil
                             </a>
                         </td>
@@ -81,10 +81,10 @@ export async function POST(request: Request) {
                     <tr>
                         <td style="background-color: #f8f9fa; padding: 24px 40px; text-align: center; border-top: 1px solid #e5e7eb;">
                             <p style="margin: 0; font-size: 12px; color: #9ca3af;">
-                                © 2024 ORÉA - L'annuaire beauté premium d'Abidjan
+                                © 2024 Maison Nubi - L'annuaire beauté premium d'Abidjan
                             </p>
                             <p style="margin: 8px 0 0; font-size: 12px; color: #9ca3af;">
-                                <a href="https://orea.ci" style="color: #D4AF37; text-decoration: none;">orea.ci</a>
+                                <a href="https://maisonnubi.ci" style="color: #D4AF37; text-decoration: none;">maisonnubi.ci</a>
                             </p>
                         </td>
                     </tr>

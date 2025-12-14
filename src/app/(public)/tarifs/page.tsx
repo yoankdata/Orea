@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import { Check, X, Crown, Sparkles, Zap, Star, ShieldCheck, TrendingUp, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,15 +6,15 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
-    title: "Tarifs & Offre Premium | ORÉA",
+    title: "Tarifs & Offre Premium | Maison Nubi",
     description:
-        "Découvrez l'offre ORÉA GOLD : boostez votre visibilité, attirez plus de clients et développez votre activité beauté à Abidjan.",
+        "Découvrez l'offre NUBI GOLD : boostez votre visibilité, attirez plus de clients et développez votre activité beauté à Abidjan.",
 };
 
 // Comparatif des offres
 const features = [
     {
-        name: "Profil visible sur ORÉA",
+        name: "Profil visible sur Maison Nubi",
         free: true,
         premium: true,
         description: "Votre fiche établissement accessible 24/7",
@@ -95,7 +95,7 @@ export default function PricingPage() {
                         </h1>
 
                         <p className="mx-auto max-w-2xl text-lg text-muted-foreground md:text-xl">
-                            Rejoignez l'élite de la beauté à Abidjan. Passez à ORÉA GOLD et multipliez vos demandes de rendez-vous dès aujourd'hui.
+                            Rejoignez l'élite de la beauté à Abidjan. Passez à NUBI GOLD et multipliez vos demandes de rendez-vous dès aujourd'hui.
                         </p>
                     </div>
                 </div>
@@ -173,7 +173,7 @@ export default function PricingPage() {
                             <CardHeader className="pb-8 pt-10 border-b border-gold/10 bg-gradient-to-b from-gold/5 to-transparent">
                                 <div className="flex justify-between items-start mb-2">
                                     <div>
-                                        <CardTitle className="font-serif text-3xl text-gold-dark">ORÉA GOLD</CardTitle>
+                                        <CardTitle className="font-serif text-3xl text-gold-dark">NUBI GOLD</CardTitle>
                                         <CardDescription className="text-base text-anthracite/80 mt-1">
                                             Pour ceux qui veulent dominer leur marché.
                                         </CardDescription>
@@ -315,7 +315,7 @@ export default function PricingPage() {
                         Prêt à faire décoller votre activité ?
                     </h2>
                     <p className="mx-auto mb-10 max-w-xl text-lg text-muted-foreground">
-                        Ne laissez pas vos concurrents prendre votre place. Rejoignez ORÉA aujourd'hui.
+                        Ne laissez pas vos concurrents prendre votre place. Rejoignez Maison Nubi aujourd'hui.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Button

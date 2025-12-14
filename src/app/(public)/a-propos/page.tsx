@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Sparkles, Heart, Users, Star, Award, CheckCircle2, TrendingUp, MapPin } from "lucide-react";
@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata: Metadata = {
-    title: "À propos d'ORÉA | L'annuaire beauté d'Abidjan",
+    title: "À propos d'Maison Nubi | L'annuaire beauté d'Abidjan",
     description:
-        "Découvrez ORÉA, la plateforme qui révolutionne la beauté en Côte d'Ivoire. Notre mission : connecter les meilleurs talents d'Abidjan avec leurs futurs clients.",
-    keywords: ["ORÉA", "mission", "valeurs", "startup Abidjan", "beauté Côte d'Ivoire"],
+        "Découvrez Maison Nubi, la plateforme qui révolutionne la beauté en Côte d'Ivoire. Notre mission : connecter les meilleurs talents d'Abidjan avec leurs futurs clients.",
+    keywords: ["Maison Nubi", "mission", "valeurs", "startup Abidjan", "beauté Côte d'Ivoire"],
 };
 
 const values = [
@@ -47,7 +47,7 @@ const stats = [
 ];
 
 /**
- * Page À propos - Présentation d'ORÉA
+ * Page À propos - Présentation d'Maison Nubi
  */
 export default function AboutPage() {
     return (
@@ -82,7 +82,7 @@ export default function AboutPage() {
                         </h1>
 
                         <p className="mx-auto max-w-2xl text-lg text-muted-foreground leading-relaxed md:text-xl">
-                            ORÉA est née d'une vision simple : offrir aux talents de la beauté une vitrine digne de leur art, et aux clients l'expérience fluide qu'ils méritent.
+                            Maison Nubi est née d'une vision simple : offrir aux talents de la beauté une vitrine digne de leur art, et aux clients l'expérience fluide qu'ils méritent.
                         </p>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ export default function AboutPage() {
                                         En Côte d'Ivoire, le secteur de la beauté regorge de pépites : coiffeuses expertes en tresses, maquilleuses artistiques, barbiers de précision... Pourtant, le bouche-à-oreille ne suffit plus.
                                     </p>
                                     <p>
-                                        <strong className="text-anthracite font-medium">ORÉA change la donne.</strong> Nous digitalisons la beauté ivoirienne. Nous transformons la façon dont les services sont découverts et réservés.
+                                        <strong className="text-anthracite font-medium">Maison Nubi change la donne.</strong> Nous digitalisons la beauté ivoirienne. Nous transformons la façon dont les services sont découverts et réservés.
                                     </p>
                                 </div>
                             </div>
@@ -184,7 +184,7 @@ export default function AboutPage() {
 
                 <div className="container relative mx-auto px-4">
                     <div className="mb-16 text-center">
-                        <span className="text-gold font-medium tracking-widest text-sm uppercase mb-3 block">ADN ORÉA</span>
+                        <span className="text-gold font-medium tracking-widest text-sm uppercase mb-3 block">ADN Maison Nubi</span>
                         <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-6">Nos piliers fondamentaux</h2>
                         <p className="mx-auto max-w-2xl text-gray-400 text-lg">
                             Ces valeurs ne sont pas juste des mots sur un mur. Elles guident chaque fonctionnalité que nous développons et chaque partenaire que nous accueillons.

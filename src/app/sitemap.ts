@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { createClient } from '@/lib/supabase-server';
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://orea.ci';
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://maisonnubi.ci';
 
 /**
  * Génère le sitemap dynamique du site
@@ -73,7 +73,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                 .eq('status', 'active');
 
             if (profiles) {
-                providerPages = profiles.map((profile) => ({
+                // Cast explicite pour TypeScript
+                const typedProfiles = profiles as { slug: string; updated_at: string }[];
+                providerPages = typedProfiles.map((profile) => ({
                     url: `${BASE_URL}/prestataire/${profile.slug}`,
                     lastModified: new Date(profile.updated_at),
                     changeFrequency: 'weekly' as const,

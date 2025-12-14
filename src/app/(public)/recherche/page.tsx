@@ -50,6 +50,84 @@ const NEIGHBORHOODS = [
     "Koumassi",
 ];
 
+// ============================================
+// RECHERCHE INTELLIGENTE
+// Parse une requête comme "Tresses à Cocody pas cher"
+// ============================================
+
+// Mots-clés associés à chaque catégorie
+const CATEGORY_KEYWORDS: Record<Category, string[]> = {
+    coiffure: ["tresse", "tresses", "coiffure", "cheveux", "tissage", "locks", "braids", "nappy", "défrisage", "coiffeuse", "coiffeur"],
+    makeup: ["maquillage", "makeup", "make-up", "mariée", "mariage", "teint", "contouring", "maquilleuse"],
+    ongles: ["ongles", "ongle", "manucure", "pédicure", "nail", "nails", "gel", "vernis", "pose", "capsules"],
+    soins: ["soin", "soins", "spa", "massage", "facial", "visage", "corps", "gommage", "épilation"],
+    barber: ["barber", "barbier", "barbe", "coupe homme", "dégradé", "fade", "homme"],
+};
+
+// Mots-clés de localisation
+const LOCATION_KEYWORDS: Record<string, string[]> = {
+    "Cocody Angré": ["cocody", "angré", "angre"],
+    "Cocody Danga": ["danga"],
+    "Marcory Zone 4": ["marcory", "zone 4", "zone4"],
+    "Plateau": ["plateau"],
+    "Riviera Faya": ["riviera", "faya"],
+    "Yopougon": ["yopougon", "yop"],
+    "Treichville": ["treichville"],
+    "Adjamé": ["adjamé", "adjame"],
+    "Koumassi": ["koumassi"],
+};
+
+interface ParsedQuery {
+    searchTerms: string;
+    detectedCategory: Category | null;
+    detectedLocation: string | null;
+}
+
+/**
+ * Parse une requête de recherche naturelle
+ * Ex: "Tresses à Cocody pas cher" → { searchTerms: "pas cher", detectedCategory: "coiffure", detectedLocation: "Cocody Angré" }
+ */
+function parseSearchQuery(query: string): ParsedQuery {
+    const lowerQuery = query.toLowerCase().trim();
+    let searchTerms = lowerQuery;
+    let detectedCategory: Category | null = null;
+    let detectedLocation: string | null = null;
+
+    // Détecter la catégorie
+    for (const [category, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+        for (const keyword of keywords) {
+            if (lowerQuery.includes(keyword)) {
+                detectedCategory = category as Category;
+                // Retirer le mot-clé de la recherche
+                searchTerms = searchTerms.replace(new RegExp(keyword, 'gi'), '').trim();
+                break;
+            }
+        }
+        if (detectedCategory) break;
+    }
+
+    // Détecter la localisation
+    for (const [location, keywords] of Object.entries(LOCATION_KEYWORDS)) {
+        for (const keyword of keywords) {
+            if (lowerQuery.includes(keyword)) {
+                detectedLocation = location;
+                // Retirer le mot-clé de la recherche
+                searchTerms = searchTerms.replace(new RegExp(keyword, 'gi'), '').trim();
+                break;
+            }
+        }
+        if (detectedLocation) break;
+    }
+
+    // Nettoyer les mots de liaison restants
+    searchTerms = searchTerms
+        .replace(/\b(à|a|au|aux|de|du|des|le|la|les|un|une|pas|cher|et|ou)\b/gi, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    return { searchTerms, detectedCategory, detectedLocation };
+}
+
 // Composant Skeleton pour le chargement
 const ProviderCardSkeleton = () => (
     <div className="rounded-xl border border-border/40 bg-white p-4 h-[380px] flex flex-col gap-4">
@@ -87,7 +165,7 @@ function SearchPageContent() {
         return () => clearTimeout(timer);
     }, [searchQuery]);
 
-    // Fetch des données
+    // Fetch des données avec recherche intelligente
     useEffect(() => {
         let isMounted = true;
 
@@ -104,6 +182,14 @@ function SearchPageContent() {
             }
 
             try {
+                // Parser la requête pour détecter catégorie et lieu automatiquement
+                const parsed = debouncedQuery ? parseSearchQuery(debouncedQuery) : null;
+
+                // Utiliser les filtres détectés automatiquement OU les filtres manuels
+                const effectiveCategory = parsed?.detectedCategory || (selectedCategory !== "all" ? selectedCategory : null);
+                const effectiveLocation = parsed?.detectedLocation || (selectedNeighborhood !== "Tous les quartiers" ? selectedNeighborhood : null);
+                const searchTerms = parsed?.searchTerms || "";
+
                 let query = supabase
                     .from("profiles")
                     .select("*")
@@ -112,17 +198,19 @@ function SearchPageContent() {
                     .order("rating", { ascending: false })     // Mieux notés ensuite
                     .limit(50); // Sécurité performance
 
-                if (selectedCategory !== "all") {
-                    query = query.eq("category", selectedCategory);
+                // Appliquer le filtre catégorie (détecté ou manuel)
+                if (effectiveCategory) {
+                    query = query.eq("category", effectiveCategory);
                 }
 
-                if (selectedNeighborhood !== "Tous les quartiers") {
-                    query = query.eq("neighborhood", selectedNeighborhood);
+                // Appliquer le filtre localisation (détecté ou manuel)
+                if (effectiveLocation) {
+                    query = query.eq("neighborhood", effectiveLocation);
                 }
 
-                if (debouncedQuery) {
-                    // Recherche insensible à la casse dans le nom ET la bio
-                    query = query.or(`full_name.ilike.%${debouncedQuery}%,bio.ilike.%${debouncedQuery}%`);
+                // Recherche texte sur les termes restants
+                if (searchTerms) {
+                    query = query.or(`full_name.ilike.%${searchTerms}%,bio.ilike.%${searchTerms}%`);
                 }
 
                 const { data, error: supabaseError } = await query;
@@ -159,8 +247,8 @@ function SearchPageContent() {
 
     return (
         <div className="min-h-screen bg-gray-50/50">
-            {/* Header de Recherche Sticky */}
-            <div className="sticky top-0 md:top-16 z-30 bg-white/80 backdrop-blur-xl border-b border-border/40 transition-all">
+            {/* Header de Recherche Sticky (Relative sur mobile pour éviter conflit avec Navbar) */}
+            <div className="relative md:sticky top-0 md:top-16 z-30 bg-white/80 backdrop-blur-xl border-b border-border/40 transition-all">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex flex-col md:flex-row gap-3 items-center">
 
@@ -171,7 +259,7 @@ function SearchPageContent() {
                                 <Search className="h-5 w-5 text-muted-foreground group-hover:text-gold transition-colors mr-3" />
                                 <Input
                                     type="text"
-                                    placeholder="Rechercher un salon, un service..."
+                                    placeholder="Ex: Tresses à Cocody, Maquillage mariée..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     className="border-none shadow-none focus-visible:ring-0 bg-transparent flex-1 h-full text-base placeholder:text-muted-foreground/70"
@@ -253,8 +341,8 @@ function SearchPageContent() {
                                                         key={cat.value}
                                                         onClick={() => setSelectedCategory(cat.value)}
                                                         className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all border ${selectedCategory === cat.value
-                                                                ? "bg-gold/10 border-gold text-gold-dark"
-                                                                : "bg-gray-50 border-transparent text-anthracite hover:bg-gray-100"
+                                                            ? "bg-gold/10 border-gold text-gold-dark"
+                                                            : "bg-gray-50 border-transparent text-anthracite hover:bg-gray-100"
                                                             }`}
                                                     >
                                                         {cat.label}

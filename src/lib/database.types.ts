@@ -1,5 +1,5 @@
-/**
- * Types de la base de données Supabase pour ORÉA
+﻿/**
+ * Types de la base de données Supabase pour Maison Nubi
  * Générés manuellement à partir du schéma SQL
  */
 
@@ -94,7 +94,7 @@ export interface PortfolioImageInsert {
     image_url: string;
 }
 
-// Type global pour la base de données
+// Type global pour la base de données - Format compatible @supabase/ssr
 export interface Database {
     public: {
         Tables: {
@@ -102,22 +102,28 @@ export interface Database {
                 Row: Profile;
                 Insert: ProfileInsert;
                 Update: ProfileUpdate;
+                Relationships: [];
             };
             services: {
                 Row: Service;
                 Insert: ServiceInsert;
                 Update: ServiceUpdate;
+                Relationships: [];
             };
             portfolio_images: {
                 Row: PortfolioImage;
                 Insert: PortfolioImageInsert;
-                Update: never;
+                Update: Partial<PortfolioImageInsert>;
+                Relationships: [];
             };
         };
+        Views: Record<string, never>;
+        Functions: Record<string, never>;
         Enums: {
             category_type: Category;
             profile_status: ProfileStatus;
         };
+        CompositeTypes: Record<string, never>;
     };
 }
 
@@ -130,3 +136,30 @@ export interface ProfileWithServices extends Profile {
 export interface ProfileSearchResult extends Profile {
     services: Pick<Service, "title" | "price">[];
 }
+
+// ============================================
+// TYPE ALIASES DÉRIVÉS DE DATABASE
+// Utilisez ces types pour garantir la cohérence
+// avec le schéma Supabase
+// ============================================
+
+/** Type Row pour profiles - Utilisez ce type au lieu de Profile pour les requêtes */
+export type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
+
+/** Type Row pour services - Utilisez ce type au lieu de Service pour les requêtes */
+export type ServiceRow = Database["public"]["Tables"]["services"]["Row"];
+
+/** Type Row pour portfolio_images */
+export type PortfolioImageRow = Database["public"]["Tables"]["portfolio_images"]["Row"];
+
+/** Type Insert pour profiles */
+export type ProfileInsertRow = Database["public"]["Tables"]["profiles"]["Insert"];
+
+/** Type Insert pour services */
+export type ServiceInsertRow = Database["public"]["Tables"]["services"]["Insert"];
+
+/** Type Update pour profiles */
+export type ProfileUpdateRow = Database["public"]["Tables"]["profiles"]["Update"];
+
+/** Type Update pour services */
+export type ServiceUpdateRow = Database["public"]["Tables"]["services"]["Update"];

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { MessageCircle, Loader2 } from "lucide-react";
@@ -60,7 +60,7 @@ export function WhatsAppButton({
         // Ouvrir WhatsApp
         const formattedNumber = formatWhatsApp(whatsapp);
         const message = encodeURIComponent(
-            `Bonjour ${providerName}, je vous contacte via ORÉA.`
+            `Bonjour ${providerName}, je vous contacte via Maison Nubi.`
         );
         window.open(`https://wa.me/${formattedNumber}?text=${message}`, '_blank');
 

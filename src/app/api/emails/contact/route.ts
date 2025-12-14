@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { resend, FROM_EMAIL } from '@/lib/resend';
 
 /**
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
         const { error } = await resend.emails.send({
             from: FROM_EMAIL,
             to: providerEmail,
-            subject: '🎉 Un client s\'intéresse à vous sur ORÉA !',
+            subject: '🎉 Un client s\'intéresse à vous sur Maison Nubi !',
             html: `
 <!DOCTYPE html>
 <html>
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
                     <tr>
                         <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 40px; text-align: center;">
                             <h1 style="margin: 0; font-size: 32px; color: #D4AF37; font-family: Georgia, serif; letter-spacing: 2px;">
-                                ORÉA
+                                Maison Nubi
                             </h1>
                         </td>
                     </tr>
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
                             </p>
                             ` : ''}
                             
-                            <a href="https://orea.ci/account/profile" style="display: inline-block; background-color: #1a1a1a; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 50px; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+                            <a href="https://maisonnubi.ci/account/profile" style="display: inline-block; background-color: #1a1a1a; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 50px; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
                                 Voir mon tableau de bord
                             </a>
                         </td>
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
                         <td style="padding: 0 40px 40px;">
                             <div style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); padding: 20px; border-radius: 12px; text-align: center;">
                                 <p style="margin: 0; font-size: 14px; color: #92400e;">
-                                    <strong>💡 Astuce Pro :</strong> Passez à <span style="color: #D4AF37; font-weight: bold;">ORÉA GOLD</span> pour apparaître en premier et attirer plus de clients !
+                                    <strong>💡 Astuce Pro :</strong> Passez à <span style="color: #D4AF37; font-weight: bold;">NUBI GOLD</span> pour apparaître en premier et attirer plus de clients !
                                 </p>
                             </div>
                         </td>
@@ -98,7 +98,7 @@ export async function POST(request: Request) {
                     <tr>
                         <td style="background-color: #f8f9fa; padding: 24px 40px; text-align: center; border-top: 1px solid #e5e7eb;">
                             <p style="margin: 0; font-size: 12px; color: #9ca3af;">
-                                © 2024 ORÉA - L'annuaire beauté premium d'Abidjan
+                                © 2024 Maison Nubi - L'annuaire beauté premium d'Abidjan
                             </p>
                         </td>
                     </tr>

@@ -59,7 +59,7 @@ export default function ServicesPage() {
     });
 
     // Récupérer l'utilisateur et ses services
-    const { data: services, isLoading } = useQuery({
+    const { data: services, isLoading } = useQuery<Service[]>({
         queryKey: ["services"],
         queryFn: async () => {
             if (!supabase) throw new Error("Supabase non configuré");
@@ -74,7 +74,8 @@ export default function ServicesPage() {
                 .order("created_at", { ascending: false });
 
             if (error) throw error;
-            return data as unknown as Service[];
+            // Cast vers Service[] - Correspond à database.types.ts
+            return (data ?? []) as Service[];
         },
     });
 

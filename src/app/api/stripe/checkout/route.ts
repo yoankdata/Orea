@@ -1,4 +1,4 @@
-import Stripe from "stripe";
+﻿import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase-server";
 
@@ -39,7 +39,7 @@ export async function POST() {
             customer_email: user.email!,
             line_items: [
                 {
-                    price: process.env.STRIPE_PRICE_ID!, // ID du prix Oréa Gold
+                    price: process.env.STRIPE_PRICE_ID!, // ID du prix NUBI GOLD
                     quantity: 1,
                 },
             ],

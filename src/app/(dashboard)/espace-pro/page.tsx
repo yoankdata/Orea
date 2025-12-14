@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Crown, PartyPopper, Sparkles } from "lucide-react";
+import { Crown, PartyPopper, Sparkles, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -35,10 +35,11 @@ export default function AccountPage() {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="flex items-center justify-center min-h-screen bg-gray-50/50 px-4">
+
             {/* Animation de confettis simple */}
             {showConfetti && (
-                <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                <div className="fixed inset-0 pointer-events-none overflow-hidden z-50">
                     {[...Array(50)].map((_, i) => (
                         <div
                             key={i}
@@ -63,52 +64,75 @@ export default function AccountPage() {
                 </div>
             )}
 
-            <Card className="max-w-md w-full border-2 border-gold text-center">
-                <CardContent className="pt-8 pb-8 space-y-6">
-                    {/* Icône */}
-                    <div className="flex justify-center">
-                        <div className="relative">
-                            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-gold to-amber-600">
-                                <Crown className="h-10 w-10 text-white" />
-                            </div>
-                            <div className="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-green-500">
-                                <PartyPopper className="h-4 w-4 text-white" />
+            <div className="w-full max-w-md animate-in slide-in-from-bottom-8 fade-in duration-700">
+                <Card className="border-0 shadow-2xl shadow-gold/10 overflow-hidden relative">
+                    {/* Bandeau décoratif */}
+                    <div className="h-2 bg-gradient-to-r from-gold via-yellow-400 to-gold w-full absolute top-0 left-0" />
+
+                    <CardContent className="pt-12 pb-10 px-8 text-center space-y-8">
+
+                        {/* Icône et Badge */}
+                        <div className="flex justify-center relative">
+                            <div className="relative">
+                                {/* Halo lumineux derrière */}
+                                <div className="absolute inset-0 bg-gold/20 blur-xl rounded-full scale-150 animate-pulse" />
+
+                                <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-gold to-amber-500 shadow-lg border-4 border-white">
+                                    <Crown className="h-12 w-12 text-white" />
+                                </div>
+                                <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md border border-gray-100">
+                                    <PartyPopper className="h-5 w-5 text-gold" />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Message */}
-                    <div>
-                        <h1 className="font-serif text-2xl font-bold text-anthracite mb-2">
-                            Bienvenue chez ORÉA GOLD ! 🎉
-                        </h1>
-                        <p className="text-muted-foreground">
-                            Merci pour votre confiance. Votre abonnement premium est maintenant actif.
-                        </p>
-                    </div>
+                        {/* Message Principal */}
+                        <div className="space-y-3">
+                            <h1 className="font-serif text-3xl font-bold text-anthracite">
+                                Félicitations !
+                            </h1>
+                            <p className="text-muted-foreground text-lg">
+                                Bienvenue dans le club <span className="font-bold text-gold">NUBI GOLD</span>.
+                            </p>
+                        </div>
 
-                    {/* Avantages débloqués */}
-                    <div className="text-left bg-gold/5 rounded-xl p-4 space-y-2">
-                        <p className="text-sm font-medium text-anthracite">
-                            ✨ Vos avantages sont débloqués :
-                        </p>
-                        <ul className="text-sm text-muted-foreground space-y-1">
-                            <li>• Badge Premium sur votre profil</li>
-                            <li>• Priorité dans les résultats de recherche</li>
-                            <li>• Photos illimitées dans votre galerie</li>
-                            <li>• Profil vérifié</li>
-                        </ul>
-                    </div>
+                        {/* Carte Avantages */}
+                        <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-100 rounded-2xl p-6 text-left shadow-inner">
+                            <p className="text-sm font-semibold text-anthracite mb-4 flex items-center gap-2">
+                                <Sparkles className="h-4 w-4 text-gold" />
+                                Vos nouveaux pouvoirs :
+                            </p>
+                            <ul className="space-y-3">
+                                {[
+                                    "Badge Vérifié & Premium visible",
+                                    "Priorité Top 3 dans les recherches",
+                                    "Galerie photo illimitée",
+                                    "Statistiques de vues détaillées"
+                                ].map((item, i) => (
+                                    <li key={i} className="flex items-start gap-3 text-sm text-gray-600">
+                                        <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
 
-                    {/* Bouton */}
-                    <Button
-                        onClick={() => router.push("/espace-pro/profil")}
-                        className="w-full rounded-full bg-gold hover:bg-gold-dark text-white"
-                    >
-                        Accéder à mon profil
-                    </Button>
-                </CardContent>
-            </Card>
+                        {/* Actions */}
+                        <div className="pt-2">
+                            <Button
+                                onClick={() => router.push("/espace-pro/profil")}
+                                className="w-full h-12 rounded-full bg-anthracite hover:bg-gold hover:text-white text-white font-bold transition-all duration-300 shadow-lg shadow-anthracite/20 hover:shadow-gold/30"
+                            >
+                                Configurer mon profil Gold
+                            </Button>
+                            <p className="mt-4 text-xs text-muted-foreground">
+                                Un email de confirmation vous a été envoyé.
+                            </p>
+                        </div>
+
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import { Users, Crown, Clock, CheckCircle, XCircle } from "lucide-react";
+﻿import { Users, Crown, Clock, CheckCircle, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase-server";
 import Link from "next/link";
@@ -64,7 +64,7 @@ export default async function AdminDashboardPage() {
                     Dashboard Admin
                 </h1>
                 <p className="text-muted-foreground">
-                    Vue d'ensemble de la plateforme ORÉA
+                    Vue d'ensemble de la plateforme Maison Nubi
                 </p>
             </div>
 
@@ -131,7 +131,7 @@ export default async function AdminDashboardPage() {
                             {stats.premiumProfiles}
                         </div>
                         <p className="text-xs text-gold/70">
-                            abonnés ORÉA GOLD
+                            abonnés NUBI GOLD
                         </p>
                     </CardContent>
                 </Card>

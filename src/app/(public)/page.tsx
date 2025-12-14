@@ -4,14 +4,15 @@ import { Metadata } from "next";
 import { ArrowRight, Star, Search, Users, Shield, Sparkles, Scissors, Palette, Gem, Smile, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FeaturedProfiles } from "@/components/featured-profiles";
 
 // Metadata SEO pour la page d'accueil
 export const metadata: Metadata = {
-  title: "ORÉA | L'annuaire beauté premium d'Abidjan et Côte d'Ivoire",
+  title: "Maison Nubi | L'annuaire beauté premium d'Abidjan et Côte d'Ivoire",
   description: "Trouvez les meilleurs professionnels de la beauté à Abidjan : coiffure, maquillage, ongles, soins et barber. Réservez en un clic via WhatsApp. 100% gratuit.",
   keywords: ["beauté Abidjan", "coiffeuse Abidjan", "maquillage Côte d'Ivoire", "salon de beauté", "tresses", "braids", "nail art"],
   alternates: {
-    canonical: "https://orea.ci",
+    canonical: "https://maisonnubi.ci",
   },
 };
 
@@ -19,14 +20,14 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "ORÉA",
-  url: "https://orea.ci",
+  name: "Maison Nubi",
+  url: "https://maisonnubi.ci",
   description: "L'annuaire beauté premium en Côte d'Ivoire",
   potentialAction: {
     "@type": "SearchAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: "https://orea.ci/recherche?q={search_term_string}",
+      urlTemplate: "https://maisonnubi.ci/recherche?q={search_term_string}",
     },
     "query-input": "required name=search_term_string",
   },
@@ -74,7 +75,7 @@ const categories = [
 // Statistiques
 const stats = [
   { value: "100%", label: "Profils Vérifiés" },
-  { value: "Oréa", label: "Label de Qualité" },
+  { value: "Nubi", label: "Label de Qualité" },
   { value: "5.0", label: "Standard d'Excellence", icon: Star },
 ];
 
@@ -98,7 +99,7 @@ const features = [
 ];
 
 /**
- * Landing Page ORÉA - Version Luxe Éditorial
+ * Landing Page Maison Nubi - Version Luxe Éditorial
  * - Hero "Aérien" avec Titre Géant Serif
  * - Recherche "Floating Pill"
  * - Sections épurées avec beaucoup d'espace blanc
@@ -130,7 +131,7 @@ export default function HomePage() {
           </div>
 
           {/* Titre GIGANTESQUE Serif */}
-          <h1 className="mb-8 font-serif text-5xl md:text-7xl lg:text-8xl font-medium text-anthracite tracking-tight leading-[1.1]">
+          <h1 className="mb-8 font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-medium text-anthracite tracking-tight leading-[1.1]">
             Révélez <br />
             <span className="italic font-light bg-gradient-to-r from-gold via-yellow-500 to-gold bg-clip-text text-transparent transform translate-x-2 inline-block pb-2">
               votre éclat.
@@ -138,22 +139,22 @@ export default function HomePage() {
           </h1>
 
           {/* Sous-titre Minimaliste */}
-          <p className="mx-auto mb-12 max-w-xl text-lg text-muted-foreground font-light leading-relaxed tracking-wide">
+          <p className="mx-auto mb-12 max-w-xl text-base sm:text-lg text-muted-foreground font-light leading-relaxed tracking-wide px-4">
             L'annuaire sélectif des meilleurs coiffeurs, maquilleurs et
             experts beauté de Côte d'Ivoire.
           </p>
 
           {/* Barre de Recherche "Floating Pill" */}
-          <div className="w-full max-w-2xl relative group mb-8">
+          <div className="w-full max-w-2xl relative group mb-8 px-4 sm:px-0">
             <div className="absolute -inset-1 bg-gradient-to-r from-gold/40 via-white to-gold/40 rounded-full opacity-20 group-hover:opacity-50 blur transition duration-700"></div>
-            <div className="relative flex items-center bg-white rounded-full shadow-2xl shadow-gold/5 p-2 h-16 sm:h-20 transition-all duration-300 transform hover:scale-[1.01] border border-white/50">
-              <Search className="ml-6 h-6 w-6 text-gold flex-shrink-0" />
+            <div className="relative flex items-center bg-white rounded-full shadow-2xl shadow-gold/5 p-2 h-14 sm:h-20 transition-all duration-300 transform hover:scale-[1.01] border border-white/50">
+              <Search className="ml-4 sm:ml-6 h-5 w-5 sm:h-6 sm:w-6 text-gold flex-shrink-0" />
               <Input
                 type="text"
-                placeholder="Coiffure, Maquillage, Spa..."
-                className="border-none shadow-none focus-visible:ring-0 text-lg bg-transparent h-full px-4 placeholder:text-muted-foreground/40 text-anthracite font-serif w-full"
+                placeholder="Coiffure, Maquillage..."
+                className="border-none shadow-none focus-visible:ring-0 text-base sm:text-lg bg-transparent h-full px-2 sm:px-4 placeholder:text-muted-foreground/40 text-anthracite font-serif w-full"
               />
-              <Button asChild size="lg" className="rounded-full bg-anthracite text-white hover:bg-gold hover:text-white transition-all duration-300 h-12 sm:h-16 px-8 sm:px-10 text-sm uppercase tracking-widest font-bold shadow-lg flex-shrink-0">
+              <Button asChild size="lg" className="rounded-full bg-anthracite text-white hover:bg-gold hover:text-white transition-all duration-300 h-10 sm:h-16 px-6 sm:px-10 text-xs sm:text-sm uppercase tracking-widest font-bold shadow-lg flex-shrink-0">
                 <Link href="/recherche">
                   Explorer
                 </Link>
@@ -175,10 +176,10 @@ export default function HomePage() {
       </section>
 
       {/* ===== CATÉGORIES (Design Épuré) ===== */}
-      <section className="py-24 md:py-32 bg-white">
+      <section className="py-20 md:py-32 bg-white">
         <div className="container mx-auto px-6">
-          <div className="mb-20 text-center">
-            <h2 className="font-serif text-3xl md:text-5xl text-anthracite mb-6">
+          <div className="mb-16 md:mb-20 text-center">
+            <h2 className="font-serif text-3xl md:text-5xl text-anthracite mb-4 md:mb-6">
               L'Art de la Beauté
             </h2>
             <div className="w-16 h-1 bg-gold mx-auto rounded-full opacity-30" />
@@ -198,7 +199,7 @@ export default function HomePage() {
                   <div className="mb-6 transform group-hover:scale-110 transition-transform duration-500 text-muted-foreground/50 group-hover:text-gold opacity-80 group-hover:opacity-100 relative z-10">
                     <category.icon className="section-icon h-10 w-10 md:h-12 md:w-12 stroke-[1.5]" />
                   </div>
-                  <h3 className="text-lg text-anthracite group-hover:text-gold transition-colors relative z-10 font-bold font-sans">
+                  <h3 className="text-base sm:text-lg text-anthracite group-hover:text-gold transition-colors relative z-10 font-bold font-sans">
                     {category.label}
                   </h3>
                 </div>
@@ -206,7 +207,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-16 text-center">
+          <div className="mt-12 md:mt-16 text-center">
             <Button asChild variant="link" className="text-anthracite text-xs tracking-[0.2em] uppercase hover:text-gold transition-colors group p-0">
               <Link href="/recherche" className="flex items-center gap-2">
                 Voir toutes les catégories
@@ -217,22 +218,51 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== TALENTS À LA UNE ===== */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="mb-12 md:mb-16 text-center">
+            <span className="text-gold font-medium tracking-widest text-xs uppercase mb-3 block">
+              Selection Maison Nubi
+            </span>
+            <h2 className="font-serif text-3xl md:text-5xl text-anthracite mb-4">
+              Talents a la une
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Decouvrez nos professionnels les mieux notes et les plus demandes
+            </p>
+          </div>
+
+          {/* Composant serveur qui recupere les profils */}
+          <FeaturedProfiles />
+
+          <div className="mt-12 text-center">
+            <Button asChild variant="outline" size="lg" className="rounded-full border-2 hover:bg-gold hover:text-white hover:border-gold transition-all">
+              <Link href="/recherche" className="flex items-center gap-2">
+                Voir tous les talents
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* ===== AVANTAGES (Minimaliste) ===== */}
-      <section className="py-32 bg-gray-50 relative overflow-hidden">
+      <section className="py-20 md:py-32 bg-gray-50 relative overflow-hidden">
         {/* Cercles décoratifs */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-white rounded-full blur-[120px] opacity-60 -z-10" />
 
         <div className="container mx-auto px-6">
-          <div className="grid gap-16 md:grid-cols-3">
+          <div className="grid gap-12 md:gap-16 md:grid-cols-3">
             {features.map((feature, index) => (
               <div key={index} className="flex flex-col items-center text-center group">
-                <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-xl shadow-gray-100 group-hover:shadow-gold/10 transition-all duration-500 border border-gray-100">
-                  <feature.icon className="h-8 w-8 text-gold mt-1 transition-transform group-hover:scale-110 duration-300" />
+                <div className="mb-6 md:mb-8 flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-white shadow-xl shadow-gray-100 group-hover:shadow-gold/10 transition-all duration-500 border border-gray-100">
+                  <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-gold mt-1 transition-transform group-hover:scale-110 duration-300" />
                 </div>
-                <h3 className="mb-4 text-2xl text-anthracite group-hover:text-gold transition-colors duration-300 font-bold font-sans">
+                <h3 className="mb-4 text-xl md:text-2xl text-anthracite group-hover:text-gold transition-colors duration-300 font-bold font-sans">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed max-w-xs font-light text-base">
+                <p className="text-muted-foreground leading-relaxed max-w-xs font-light text-sm md:text-base">
                   {feature.description}
                 </p>
               </div>
@@ -273,7 +303,7 @@ export default function HomePage() {
             Votre talent mérite <br /> une vitrine d'exception.
           </h2>
           <p className="mx-auto mb-12 max-w-xl text-lg text-gray-400 font-light leading-relaxed">
-            Rejoignez l'élite de la beauté ivoirienne sur ORÉA. Profitez d'une visibilité premium et gérez vos rendez-vous avec élégance.
+            Rejoignez l'élite de la beauté ivoirienne sur Maison Nubi. Profitez d'une visibilité premium et gérez vos rendez-vous avec élégance.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -283,7 +313,7 @@ export default function HomePage() {
               className="rounded-full bg-gold text-white hover:bg-white hover:text-anthracite h-14 px-10 text-sm uppercase tracking-widest font-bold transition-all duration-300 shadow-[0_0_40px_-10px_rgba(212,175,55,0.3)] hover:shadow-[0_0_60px_-10px_rgba(255,255,255,0.3)]"
             >
               <Link href="/inscription">
-                Rejoindre ORÉA
+                Rejoindre Nubi
               </Link>
             </Button>
             <Button

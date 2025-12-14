@@ -27,10 +27,10 @@ export const viewport: Viewport = {
 
 // Metadata SEO globale
 export const metadata: Metadata = {
-  metadataBase: new URL("https://orea.ci"), // INDISPENSABLE pour que les images OG fonctionnent
+  metadataBase: new URL("https://maisonnubi.ci"), // INDISPENSABLE pour que les images OG fonctionnent
   title: {
-    default: "ORÉA | L'annuaire beauté premium en Côte d'Ivoire",
-    template: "%s | ORÉA",
+    default: "Maison Nubi | L'annuaire beauté premium en Côte d'Ivoire",
+    template: "%s | Maison Nubi",
   },
   description:
     "La première plateforme digitale dédiée à l'excellence de la beauté en Côte d'Ivoire. Coiffure, maquillage, soins : trouvez et réservez les meilleurs talents d'Abidjan.",
@@ -43,20 +43,20 @@ export const metadata: Metadata = {
     "barber shop",
     "braids",
     "nattes collées",
-    "ORÉA",
+    "Maison Nubi",
   ],
-  authors: [{ name: "ORÉA" }],
-  creator: "ORÉA",
-  publisher: "ORÉA",
+  authors: [{ name: "Maison Nubi" }],
+  creator: "Maison Nubi",
+  publisher: "Maison Nubi",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "fr_CI",
-    url: "https://orea.ci",
-    siteName: "ORÉA",
-    title: "ORÉA | Révélez votre éclat",
+    url: "https://maisonnubi.ci",
+    siteName: "Maison Nubi",
+    title: "Maison Nubi | Révélez votre éclat",
     description:
       "Trouvez les meilleurs professionnels de la beauté en Côte d'Ivoire. Une sélection rigoureuse pour des prestations d'exception.",
     images: [
@@ -64,13 +64,13 @@ export const metadata: Metadata = {
         url: "/og-image.jpg", // Assurez-vous d'avoir une image 'public/og-image.jpg' (1200x630px)
         width: 1200,
         height: 630,
-        alt: "ORÉA - Annuaire Beauté Premium",
+        alt: "Maison Nubi - Annuaire Beauté Premium",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ORÉA | L'annuaire beauté premium",
+    title: "Maison Nubi | L'annuaire beauté premium",
     description: "Trouvez les meilleurs professionnels de la beauté en Côte d'Ivoire.",
     images: ["/og-image.jpg"],
   },

@@ -1,9 +1,9 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import { Sparkles, ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Connexion | ORÉA",
+    title: "Connexion | Maison Nubi",
     description: "Accédez à votre espace professionnel",
 };
 
@@ -36,7 +36,7 @@ export default function AuthLayout({
                 {/* Logo */}
                 <div className="relative z-20 flex items-center gap-2 text-lg font-medium">
                     <Sparkles className="h-6 w-6 text-gold" />
-                    <span className="font-serif text-2xl font-bold tracking-tight">ORÉA</span>
+                    <span className="font-serif text-2xl font-bold tracking-tight">Maison Nubi</span>
                 </div>
 
                 {/* Citation */}

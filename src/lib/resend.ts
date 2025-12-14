@@ -1,4 +1,4 @@
-import { Resend } from 'resend';
+﻿import { Resend } from 'resend';
 
 /**
  * Client Resend pour l'envoi d'emails transactionnels
@@ -9,4 +9,4 @@ export const resend = process.env.RESEND_API_KEY
     : null;
 
 // Email d'expédition par défaut
-export const FROM_EMAIL = 'ORÉA <onboarding@resend.dev>'; // Remplacer par votre domaine une fois vérifié
+export const FROM_EMAIL = 'Maison Nubi <onboarding@resend.dev>'; // Remplacer par votre domaine une fois vérifié

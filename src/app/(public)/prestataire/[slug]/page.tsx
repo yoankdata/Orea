@@ -4,7 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
     ArrowLeft,
-    Star,
+    Heart,
     MapPin,
     Instagram,
     Crown,
@@ -20,7 +20,9 @@ import { Badge } from "@/components/ui/badge";
 import { formatPrice } from "@/lib/utils";
 import { createClient } from "@/lib/supabase-server";
 import { WhatsAppButton } from "@/components/whatsapp-button";
+import { LikeButton } from "@/components/like-button";
 import type { Profile, Service, PortfolioImage } from "@/lib/database.types";
+import { getOptimizedImageUrl } from "@/lib/image-utils";
 
 // Labels des catégories
 const categoryLabels: Record<string, string> = {
@@ -40,22 +42,26 @@ async function getProfile(slug: string): Promise<ProfileWithDetails | null> {
     const supabase = await createClient();
     if (!supabase) return null;
 
-    const { data: profile } = await supabase
+    const { data: profileData } = await supabase
         .from("profiles")
         .select("*")
         .eq("slug", slug)
         .eq("status", "active")
         .single();
 
-    if (!profile) return null;
+    if (!profileData) return null;
 
-    const { data: services } = await supabase
+    // Cast vers Profile - Les types correspondent à database.types.ts
+    // Si le schéma DB change, mettre à jour database.types.ts en conséquence
+    const profile = profileData as unknown as Profile;
+
+    const { data: servicesData } = await supabase
         .from("services")
         .select("*")
         .eq("profile_id", profile.id)
         .order("price", { ascending: true });
 
-    const { data: portfolio_images } = await supabase
+    const { data: portfolioData } = await supabase
         .from("portfolio_images")
         .select("*")
         .eq("profile_id", profile.id)
@@ -63,8 +69,8 @@ async function getProfile(slug: string): Promise<ProfileWithDetails | null> {
 
     return {
         ...profile,
-        services: (services as unknown as Service[]) || [],
-        portfolio_images: (portfolio_images as unknown as PortfolioImage[]) || [],
+        services: (servicesData ?? []) as Service[],
+        portfolio_images: (portfolioData ?? []) as PortfolioImage[],
     };
 }
 
@@ -87,8 +93,9 @@ export default async function ProviderProfilePage({ params }: { params: Promise<
     const isPremium = profile.is_premium;
     const initials = profile.full_name.slice(0, 2).toUpperCase();
 
-    // Image de couverture : Première image du portfolio OU Défaut
-    const coverImage = profile.portfolio_images?.[0]?.image_url || "/profile-hero.jpg";
+    // Image de couverture : Toujours la banniere generique Maison Nubi
+    const coverImage = "/profile-hero.jpg";
+    const avatarImage = getOptimizedImageUrl(profile.avatar_url, 'avatar', 'high');
 
     return (
         <div className="min-h-screen bg-white font-sans pb-20">
@@ -126,7 +133,7 @@ export default async function ProviderProfilePage({ params }: { params: Promise<
                     <div className="relative shrink-0 mx-auto md:mx-0">
                         <div className="h-32 w-32 rounded-full p-1 bg-white shadow-2xl shadow-black/10">
                             <Avatar className="h-full w-full border border-gray-100">
-                                <AvatarImage src={profile.avatar_url || undefined} className="object-cover" />
+                                <AvatarImage src={avatarImage || undefined} className="object-cover" />
                                 <AvatarFallback className="bg-anthracite text-white text-3xl font-serif">{initials}</AvatarFallback>
                             </Avatar>
                         </div>
@@ -147,11 +154,12 @@ export default async function ProviderProfilePage({ params }: { params: Promise<
                                     <Badge variant="outline" className="border-gold text-gold-dark bg-gold/5 uppercase text-[10px] font-bold px-2 py-0.5">
                                         {categoryLabels[profile.category] || "Beauté"}
                                     </Badge>
-                                    {profile.rating > 0 && (
-                                        <div className="flex items-center gap-1 text-sm font-medium bg-gray-100 px-2 py-0.5 rounded-full">
-                                            <Star className="h-3 w-3 fill-gold text-gold" />
-                                            <span>{profile.rating.toFixed(1)}</span>
-                                            <span className="text-gray-400 text-xs">({profile.review_count || 0})</span>
+                                    {/* Badge Recommandations */}
+                                    {((profile as unknown as { recommendations_count?: number }).recommendations_count || 0) > 0 && (
+                                        <div className="flex items-center gap-1 text-sm font-medium bg-gold/10 px-2 py-0.5 rounded-full">
+                                            <Heart className="h-3 w-3 fill-gold text-gold" />
+                                            <span className="text-gold-dark">{(profile as unknown as { recommendations_count?: number }).recommendations_count}</span>
+                                            <span className="text-gold-dark/60 text-xs">recommandations</span>
                                         </div>
                                     )}
                                 </div>
@@ -169,6 +177,10 @@ export default async function ProviderProfilePage({ params }: { params: Promise<
 
                             {/* Actions */}
                             <div className="flex items-center gap-2 w-full md:w-auto justify-center md:justify-end pb-1">
+                                <LikeButton
+                                    profileId={profile.id}
+                                    initialCount={(profile as unknown as { recommendations_count?: number }).recommendations_count || 0}
+                                />
                                 <Button size="icon" variant="outline" className="rounded-full h-10 w-10 md:h-12 md:w-12 border-gray-200">
                                     <Share2 className="h-4 w-4 md:h-5 md:w-5" />
                                 </Button>

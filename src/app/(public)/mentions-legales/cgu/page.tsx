@@ -1,11 +1,11 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Scale } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-    title: "Conditions Générales d'Utilisation | ORÉA",
-    description: "Conditions générales d'utilisation de la plateforme ORÉA - L'annuaire beauté d'Abidjan",
+    title: "Conditions Générales d'Utilisation | Maison Nubi",
+    description: "Conditions générales d'utilisation de la plateforme Maison Nubi - L'annuaire beauté d'Abidjan",
 };
 
 /**
@@ -50,11 +50,11 @@ export default function TermsPage() {
                     </h2>
                     <p>
                         Les présentes Conditions Générales d'Utilisation (CGU) définissent les modalités
-                        d'accès et d'utilisation de la plateforme ORÉA, accessible à l'adresse orea.ci
+                        d'accès et d'utilisation de la plateforme Maison Nubi, accessible à l'adresse maisonnubi.ci
                         (ci-après "le Site").
                     </p>
                     <p>
-                        ORÉA est une plateforme de mise en relation entre des professionnels de la beauté
+                        Maison Nubi est une plateforme de mise en relation entre des professionnels de la beauté
                         (coiffeurs, maquilleurs, esthéticiennes, etc.) et des clients potentiels situés
                         principalement à Abidjan, Côte d'Ivoire.
                     </p>
@@ -100,7 +100,7 @@ export default function TermsPage() {
                         <div className="p-6 bg-anthracite text-white rounded-xl shadow-lg relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-20 h-20 bg-gold/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
                             <h4 className="font-serif text-lg font-bold text-gold mb-3 flex items-center gap-2">
-                                ORÉA GOLD <Scale className="h-4 w-4" />
+                                NUBI GOLD <Scale className="h-4 w-4" />
                             </h4>
                             <ul className="space-y-2 text-sm text-gray-300">
                                 <li className="flex gap-2"><span className="text-gold">•</span> Badge Premium distinctif</li>
@@ -115,7 +115,7 @@ export default function TermsPage() {
                         Paiements
                     </h2>
                     <p>
-                        L'abonnement ORÉA GOLD est facturé mensuellement via notre partenaire de
+                        L'abonnement NUBI GOLD est facturé mensuellement via notre partenaire de
                         paiement sécurisé Stripe. Vous pouvez annuler votre abonnement à tout moment.
                         Les paiements sont sécurisés et conformes aux normes PCI-DSS.
                     </p>
@@ -125,7 +125,7 @@ export default function TermsPage() {
                         Contenu Utilisateur
                     </h2>
                     <p>
-                        Vous conservez tous les droits sur le contenu que vous publiez. En publiant sur ORÉA, vous accordez au Site une licence
+                        Vous conservez tous les droits sur le contenu que vous publiez. En publiant sur Maison Nubi, vous accordez au Site une licence
                         non-exclusive pour afficher ce contenu. Vous vous engagez à ne publier que du contenu dont vous êtes l'auteur.
                     </p>
 
@@ -141,14 +141,14 @@ export default function TermsPage() {
                         Limitation de Responsabilité
                     </h2>
                     <p>
-                        ORÉA agit en tant qu'intermédiaire et ne peut être tenu responsable des
+                        Maison Nubi agit en tant qu'intermédiaire et ne peut être tenu responsable des
                         prestations effectuées par les professionnels inscrits sur la plateforme.
                     </p>
 
                     <div className="mt-16 pt-8 border-t border-border/50 text-center">
                         <p className="text-lg font-serif text-anthracite mb-4">Une question sur nos conditions ?</p>
                         <Button asChild size="lg" className="rounded-full bg-anthracite text-white hover:bg-gold transition-colors px-8">
-                            <a href="mailto:contact@orea.ci">Nous contacter</a>
+                            <a href="mailto:contact@maisonnubi.ci">Nous contacter</a>
                         </Button>
                     </div>
                 </article>

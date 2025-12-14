@@ -1,11 +1,11 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Shield, Lock, Eye, Database } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-    title: "Politique de Confidentialité | ORÉA",
-    description: "Politique de confidentialité et protection des données personnelles sur ORÉA",
+    title: "Politique de Confidentialité | Maison Nubi",
+    description: "Politique de confidentialité et protection des données personnelles sur Maison Nubi",
 };
 
 /**
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
 
                 <article className="prose prose-lg prose-slate max-w-none prose-headings:font-serif prose-headings:text-anthracite prose-a:text-gold hover:prose-a:text-gold-dark">
                     <p className="lead font-serif text-xl text-anthracite/80 italic mb-12">
-                        Votre confiance est précieuse. Voici comment nous protégeons vos données sur ORÉA.
+                        Votre confiance est précieuse. Voici comment nous protégeons vos données sur Maison Nubi.
                     </p>
 
                     <div className="grid sm:grid-cols-2 gap-8 not-prose mb-16">
@@ -126,7 +126,7 @@ export default function PrivacyPage() {
                     <p>Conformément à la réglementation, vous disposez d'un droit d'accès, de rectification et de suppression de vos données.</p>
                     <p>
                         Pour exercer ces droits ou supprimer votre compte, contactez simplement notre DPO à : <br />
-                        <a href="mailto:contact@orea.ci" className="font-serif text-gold text-lg no-underline hover:underline">contact@orea.ci</a>
+                        <a href="mailto:contact@maisonnubi.ci" className="font-serif text-gold text-lg no-underline hover:underline">contact@maisonnubi.ci</a>
                     </p>
 
                     <div className="mt-16 pt-8 border-t border-border/50 flex flex-col items-center">

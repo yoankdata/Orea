@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef } from "react";
 import Image from "next/image";
@@ -81,7 +81,7 @@ export default function GalleryPage() {
 
         // Vérifier la limite pour les comptes gratuits
         if (!isPremium && imageCount >= FREE_PHOTO_LIMIT) {
-            setError(`Limite de ${FREE_PHOTO_LIMIT} photos atteinte. Passez à ORÉA GOLD pour des photos illimitées !`);
+            setError(`Limite de ${FREE_PHOTO_LIMIT} photos atteinte. Passez à NUBI GOLD pour des photos illimitées !`);
             if (fileInputRef.current) {
                 fileInputRef.current.value = "";
             }
@@ -236,7 +236,7 @@ export default function GalleryPage() {
                                 Photos illimitées
                             </p>
                             <p className="text-xs text-muted-foreground">
-                                Avantage ORÉA GOLD actif
+                                Avantage NUBI GOLD actif
                             </p>
                         </div>
                         <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
@@ -253,7 +253,7 @@ export default function GalleryPage() {
                                 {imageCount}/{FREE_PHOTO_LIMIT} photos utilisées
                             </p>
                             <p className="text-xs text-muted-foreground">
-                                Passez à ORÉA GOLD pour des photos illimitées
+                                Passez à NUBI GOLD pour des photos illimitées
                             </p>
                         </div>
                         <Button

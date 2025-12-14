@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Star, MapPin, ArrowRight, Sparkles } from "lucide-react";
+import { Heart, MapPin, ArrowRight, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import type { Profile } from "@/lib/database.types";
+import { getOptimizedImageUrl } from "@/lib/image-utils";
 
 interface ProviderCardProps {
     provider: Profile;
@@ -38,6 +39,9 @@ export function ProviderCard({ provider }: ProviderCardProps) {
         barber: "Barber",
     };
 
+    // URL optimisée pour les cartes (400x400, qualité medium)
+    const optimizedAvatarUrl = getOptimizedImageUrl(provider.avatar_url, 'card', 'medium');
+
     return (
         <Link href={`/prestataire/${provider.slug}`} className="group block h-full">
             <Card className="h-full border border-transparent shadow-none bg-transparent hover:bg-white hover:border-gold/20 transition-all duration-500 ease-out hover:shadow-[0_20px_40px_-15px_rgba(212,175,55,0.15)] rounded-2xl overflow-hidden">
@@ -46,7 +50,7 @@ export function ProviderCard({ provider }: ProviderCardProps) {
                     <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-surface/50">
                         {provider.avatar_url ? (
                             <Image
-                                src={provider.avatar_url}
+                                src={optimizedAvatarUrl}
                                 alt={provider.full_name}
                                 fill
                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -66,10 +70,10 @@ export function ProviderCard({ provider }: ProviderCardProps) {
                             </div>
                         )}
 
-                        {/* Note Flottante (visible au hover ou toujours si mobile) */}
+                        {/* Badge Recommandations (visible au hover ou toujours si mobile) */}
                         <div className="absolute bottom-3 left-3 flex items-center gap-1 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-xs font-medium text-anthracite shadow-sm">
-                            <Star className="h-3 w-3 fill-gold text-gold" />
-                            <span>{provider.rating.toFixed(1)}</span>
+                            <Heart className="h-3 w-3 fill-gold text-gold" />
+                            <span>{(provider as unknown as { recommendations_count?: number }).recommendations_count || 0}</span>
                         </div>
                     </div>
 
