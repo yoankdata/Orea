@@ -44,6 +44,7 @@ export interface ProfileInsert {
     instagram_handle?: string | null;
     avatar_url?: string | null;
     is_premium?: boolean;
+    status?: ProfileStatus;
 }
 
 export interface ProfileUpdate {
@@ -56,6 +57,8 @@ export interface ProfileUpdate {
     whatsapp?: string;
     instagram_handle?: string | null;
     avatar_url?: string | null;
+    status?: ProfileStatus;
+    is_premium?: boolean;
 }
 
 // Interface d'un service/prestation
