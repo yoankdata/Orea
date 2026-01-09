@@ -1,3 +1,4 @@
+import Script from "next/script";
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";
@@ -17,6 +18,21 @@ const lato = Lato({
   display: "swap",
   weight: ["300", "400", "700", "900"],
 });
+
+// Organization JSON-LD
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Maison Nubi",
+  url: "https://maisonnubi.ci",
+  logo: "https://maisonnubi.ci/icon.png",
+  description: "L'annuaire beauté premium en Côte d'Ivoire.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Abidjan",
+    addressCountry: "CI"
+  }
+};
 
 // Configuration Viewport (Séparé des metadata dans Next.js 14+)
 export const viewport: Viewport = {
@@ -104,6 +120,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col antialiased bg-background text-foreground font-sans selection:bg-gold/20 selection:text-anthracite">
+        <Script
+          id="json-ld-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Providers>
           {children}
         </Providers>

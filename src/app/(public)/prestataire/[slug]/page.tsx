@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -97,8 +98,36 @@ export default async function ProviderProfilePage({ params }: { params: Promise<
     const coverImage = "/profile-hero.jpg";
     const avatarImage = getOptimizedImageUrl(profile.avatar_url, 'avatar', 'high');
 
+    // Construction du Schema.org (LocalBusiness / BeautySalon)
+    const minPrice = profile.services.length > 0 ? Math.min(...profile.services.map(s => s.price)) : 0;
+    const maxPrice = profile.services.length > 0 ? Math.max(...profile.services.map(s => s.price)) : 0;
+    const priceRange = minPrice > 0 ? `${formatPrice(minPrice)} - ${formatPrice(maxPrice)}` : "Sur devis";
+
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BeautySalon",
+        name: profile.full_name,
+        image: [avatarImage || "https://maisonnubi.ci/og-image.jpg"],
+        description: profile.bio || `Découvrez ${profile.full_name}, professionnel de la beauté à Abidjan.`,
+        address: {
+            "@type": "PostalAddress",
+            streetAddress: profile.neighborhood,
+            addressLocality: profile.city || "Abidjan",
+            addressRegion: "Abidjan",
+            addressCountry: "CI"
+        },
+        priceRange: priceRange,
+        url: `https://maisonnubi.ci/prestataire/${profile.slug}`,
+        telephone: profile.whatsapp ? `+225${profile.whatsapp}` : undefined,
+    };
+
     return (
         <div className="min-h-screen bg-white font-sans pb-20">
+            <Script
+                id="json-ld-profile"
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
 
             {/* === 1. HERO SECTION === */}
             {/* Hauteur réduite pour éviter l'effet "vide" sur petits écrans */}

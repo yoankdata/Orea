@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, Image, CreditCard, LogOut, Package } from "lucide-react";
+import { User, Image, CreditCard, LogOut, Package, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const sidebarLinks = [
@@ -40,6 +40,14 @@ export function DashboardNav() {
             })}
 
             <hr className="my-6 border-border/60" />
+
+            <Link
+                href="/"
+                className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-muted-foreground hover:bg-white hover:text-anthracite hover:shadow-sm transition-all duration-200"
+            >
+                <Home className="h-4 w-4" />
+                Retour au site
+            </Link>
 
             <form action="/api/auth/signout" method="POST">
                 <button

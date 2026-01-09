@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { User, Image, CreditCard, LogOut, Sparkles, Menu, Package } from "lucide-react";
+import { User, Image, CreditCard, LogOut, Sparkles, Menu, Package, Home } from "lucide-react";
 import { createClient } from "@/lib/supabase-server";
 import { Button } from "@/components/ui/button";
 import {
@@ -75,6 +75,13 @@ export default async function DashboardLayout({
                                         </Link>
                                     ))}
                                     <hr className="my-4" />
+                                    <Link
+                                        href="/"
+                                        className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted hover:text-anthracite transition-colors"
+                                    >
+                                        <Home className="h-4 w-4" />
+                                        Retour au site
+                                    </Link>
                                     <form action="/api/auth/signout" method="POST">
                                         <button
                                             type="submit"

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Script from "next/script";
 import { Metadata } from "next";
-import { ArrowRight, Star, Search, Users, Shield, Sparkles, Scissors, Palette, Gem, Smile, User } from "lucide-react";
+import { ArrowRight, Star, Search, Users, Shield, Sparkles, Scissors, Palette, Gem, Smile, User, ShieldCheck, HeartHandshake, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FeaturedProfiles } from "@/components/featured-profiles";
@@ -272,18 +272,77 @@ export default function HomePage() {
       </section>
 
       {/* ===== STATISTIQUES (Dark Mode Luxe) ===== */}
-      <section className="bg-[#1A1A1A] py-28 text-white relative overflow-hidden">
+      {/* ===== VALEURS / CHARTE QUALITÉ ===== */}
+      <section className="bg-[#111] py-24 md:py-32 text-white relative overflow-hidden border-y border-white/5">
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5 mix-blend-overlay" />
+
+        {/* Glow effect central */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[100px] opacity-50 pointer-events-none" />
+
         <div className="container mx-auto px-6 relative z-10">
-          <div className="grid gap-12 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center px-4 pt-8 sm:pt-0 group cursor-default">
-                <div className="mb-3 font-serif text-5xl md:text-7xl font-light text-gold transition-all duration-700 group-hover:text-white group-hover:scale-105 inline-block">
-                  {stat.value}
+          <div className="text-center mb-16 md:mb-20">
+            <span className="text-gold font-medium tracking-[0.3em] text-xs uppercase mb-4 block">
+              Notre Promesse
+            </span>
+            <h2 className="font-serif text-3xl md:text-5xl text-white">
+              Trouver un pro fiable, rapidement.
+            </h2>
+          </div>
+
+          <div className="grid gap-12 md:grid-cols-3 max-w-6xl mx-auto">
+            {/* Valeur 1 */}
+            <div className="flex flex-col items-center text-center group">
+              <div className="mb-6 relative">
+                <div className="absolute inset-0 bg-gold/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative h-20 w-20 flex items-center justify-center rounded-full border border-white/10 bg-white/5 group-hover:border-gold/50 group-hover:bg-gold/10 transition-all duration-500">
+                  <ShieldCheck className="h-8 w-8 text-gold/80 group-hover:text-gold transition-colors" />
                 </div>
-                <p className="text-xs font-bold tracking-[0.2em] uppercase text-white/40 group-hover:text-gold transition-colors duration-300">{stat.label}</p>
               </div>
-            ))}
+              <h3 className="mb-3 text-xl font-serif text-white group-hover:text-gold transition-colors">
+                Sélection des Prestataires
+              </h3>
+              <p className="font-medium text-white mb-2 text-sm">Des profils vérifiés, pas des comptes inconnus.</p>
+              <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+                Nous validons identité, numéro WhatsApp et portfolio pour garantir des prestataires réels et actifs à Abidjan.
+              </p>
+            </div>
+
+            {/* Valeur 2 */}
+            <div className="flex flex-col items-center text-center group">
+              <div className="mb-6 relative">
+                <div className="absolute inset-0 bg-gold/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative h-20 w-20 flex items-center justify-center rounded-full border border-white/10 bg-white/5 group-hover:border-gold/50 group-hover:bg-gold/10 transition-all duration-500">
+                  <Star className="h-8 w-8 text-gold/80 group-hover:text-gold transition-colors" />
+                </div>
+              </div>
+              <h3 className="mb-3 text-xl font-serif text-white group-hover:text-gold transition-colors">
+                Qualité & Fiabilité
+              </h3>
+              <p className="font-medium text-white mb-2 text-sm">Des résultats visibles.</p>
+              <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+                Consultez les photos de travaux, les avis clients, et choisissez un pro avec un historique vérifiable.
+              </p>
+            </div>
+
+            {/* Valeur 3 */}
+            <div className="flex flex-col items-center text-center group">
+              <div className="mb-6 relative">
+                <div className="absolute inset-0 bg-gold/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative h-20 w-20 flex items-center justify-center rounded-full border border-white/10 bg-white/5 group-hover:border-gold/50 group-hover:bg-gold/10 transition-all duration-500">
+                  <div className="relative">
+                    <div className="absolute top-0 right-0 h-3 w-3 bg-green-500 rounded-full border border-[#111]" />
+                    <MessageCircle className="h-8 w-8 text-gold/80 group-hover:text-gold transition-colors" />
+                  </div>
+                </div>
+              </div>
+              <h3 className="mb-3 text-xl font-serif text-white group-hover:text-gold transition-colors">
+                Support WhatsApp
+              </h3>
+              <p className="font-medium text-white mb-2 text-sm">Assistance en cas de besoin.</p>
+              <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+                Pour toute question ou signalement, notre équipe répond directement sur WhatsApp pendant les heures ouvrées.
+              </p>
+            </div>
           </div>
         </div>
       </section>
