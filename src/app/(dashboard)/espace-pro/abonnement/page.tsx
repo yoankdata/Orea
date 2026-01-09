@@ -14,6 +14,8 @@ import {
     BadgeCheck,
     Zap,
     CheckCircle2,
+    Copy,
+    Smartphone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -53,11 +55,7 @@ const GOLD_FEATURES = [
  * Page de gestion de l'abonnement NUBI GOLD
  */
 export default function BillingPage() {
-    const searchParams = useSearchParams();
-    const canceled = searchParams.get("canceled") === "true";
-
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [copied, setCopied] = useState(false);
 
     // Récupérer le statut premium
     const { data: profile, isLoading: isLoadingProfile } = useQuery({
@@ -81,34 +79,11 @@ export default function BillingPage() {
 
     const isPremium = profile?.is_premium || false;
 
-    // Rediriger vers Stripe Checkout
-    const handleSubscribe = async () => {
-        setIsLoading(true);
-        setError(null);
-
-        try {
-            const response = await fetch("/api/stripe/checkout", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || "Erreur lors de la création du paiement");
-            }
-
-            // Rediriger vers Stripe Checkout
-            if (data.url) {
-                window.location.href = data.url;
-            }
-        } catch (err) {
-            console.error("Erreur:", err);
-            setError(err instanceof Error ? err.message : "Une erreur est survenue");
-            setIsLoading(false);
-        }
+    // Copier le numéro
+    const handleCopyNumber = () => {
+        navigator.clipboard.writeText("07 07 75 62 97");
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
     };
 
     if (isLoadingProfile) {
@@ -127,25 +102,9 @@ export default function BillingPage() {
                     Mon Abonnement
                 </h1>
                 <p className="text-muted-foreground">
-                    {isPremium ? "Vous êtes membre NUBI GOLD" : "Débloquez tout le potentiel d'Maison Nubi"}
+                    {isPremium ? "Vous êtes membre NUBI GOLD" : "Débloquez tout le potentiel de Maison Nubi"}
                 </p>
             </div>
-
-            {/* Message annulé */}
-            {canceled && (
-                <div className="flex items-center gap-2 rounded-lg bg-amber-50 p-4 text-sm text-amber-700">
-                    <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                    Paiement annulé. Vous pouvez réessayer quand vous le souhaitez.
-                </div>
-            )}
-
-            {/* Erreur */}
-            {error && (
-                <div className="flex items-center gap-2 rounded-lg bg-red-50 p-4 text-sm text-red-600">
-                    <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                    {error}
-                </div>
-            )}
 
             {/* Carte NUBI GOLD */}
             <Card className={`relative overflow-hidden border-2 ${isPremium ? 'border-green-500 bg-green-50/30' : 'border-gold'}`}>
@@ -206,7 +165,7 @@ export default function BillingPage() {
                         ))}
                     </ul>
 
-                    {/* Bouton */}
+                    {/* Instructions de paiement ou message actif */}
                     {isPremium ? (
                         <div className="text-center py-4">
                             <div className="inline-flex items-center gap-2 rounded-full bg-green-100 px-6 py-3 text-green-700 font-medium">
@@ -218,32 +177,61 @@ export default function BillingPage() {
                             </p>
                         </div>
                     ) : (
-                        <>
-                            <Button
-                                onClick={handleSubscribe}
-                                disabled={isLoading}
-                                size="lg"
-                                className="w-full rounded-full bg-gradient-to-r from-gold to-amber-600 hover:from-gold-dark hover:to-amber-700 text-white text-lg py-6"
-                            >
-                                {isLoading ? (
-                                    <>
-                                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                        Redirection...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Crown className="mr-2 h-5 w-5" />
-                                        S&apos;abonner pour 10 000 FCFA/mois
-                                    </>
-                                )}
-                            </Button>
+                        <div className="space-y-4">
+                            {/* Instructions de paiement */}
+                            <div className="bg-gold/5 border-2 border-gold/20 rounded-xl p-6 space-y-4">
+                                <div className="flex items-center gap-2 text-gold font-semibold">
+                                    <Smartphone className="h-5 w-5" />
+                                    <span>Comment s'abonner</span>
+                                </div>
+
+                                <ol className="space-y-3 text-sm">
+                                    <li className="flex gap-3">
+                                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold text-white text-xs font-bold flex-shrink-0">1</span>
+                                        <span className="text-anthracite">Envoyez <strong className="font-bold">10 000 FCFA</strong> par <strong>Wave</strong> ou <strong>Orange Money</strong></span>
+                                    </li>
+                                    <li className="flex gap-3 items-start">
+                                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold text-white text-xs font-bold flex-shrink-0">2</span>
+                                        <div className="flex-1">
+                                            <span className="text-anthracite block mb-2">Au numéro :</span>
+                                            <div className="flex items-center gap-2 bg-white rounded-lg p-3 border border-gold/30">
+                                                <span className="font-mono text-lg font-bold text-anthracite flex-1">07 07 75 62 97</span>
+                                                <Button
+                                                    onClick={handleCopyNumber}
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="h-8 px-3 hover:bg-gold/10"
+                                                >
+                                                    {copied ? (
+                                                        <>
+                                                            <CheckCircle2 className="h-4 w-4 text-green-600" />
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Copy className="h-4 w-4" />
+                                                        </>
+                                                    )}
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold text-white text-xs font-bold flex-shrink-0">3</span>
+                                        <span className="text-anthracite">Contactez-nous sur WhatsApp au <strong className="font-bold">+225 07 07 75 62 97</strong> avec votre preuve de paiement</span>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold text-white text-xs font-bold flex-shrink-0">4</span>
+                                        <span className="text-anthracite">Votre compte sera activé <strong className="font-bold">sous 24h</strong> maximum</span>
+                                    </li>
+                                </ol>
+                            </div>
 
                             <p className="text-center text-xs text-muted-foreground">
-                                Facturation mensuelle. Annulez à tout moment.
+                                Abonnement mensuel, renouvelable chaque mois.
                                 <br />
-                                Paiement sécurisé par Stripe.
+                                Contactez-nous pour toute question.
                             </p>
-                        </>
+                        </div>
                     )}
                 </CardContent>
             </Card>

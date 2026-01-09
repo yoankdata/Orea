@@ -237,8 +237,8 @@ export default function PricingPage() {
                             <div className="mx-auto h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mb-4 text-green-600">
                                 <ShieldCheck className="h-5 w-5" />
                             </div>
-                            <h3 className="font-bold text-anthracite mb-2">Paiement Sécurisé</h3>
-                            <p className="text-sm text-muted-foreground">Transactions cryptées et sécurisées via Stripe. Nous ne stockons aucune donnée bancaire.</p>
+                            <h3 className="font-bold text-anthracite mb-2">Paiement Mobile Money</h3>
+                            <p className="text-sm text-muted-foreground">Payez facilement par Wave ou Orange Money au 07 07 75 62 97. Activation sous 24h.</p>
                         </div>
                         <div className="text-center p-6 rounded-2xl bg-surface/50 border border-border/50">
                             <div className="mx-auto h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mb-4 text-blue-600">
@@ -275,7 +275,7 @@ export default function PricingPage() {
                                 <CardHeader>
                                     <CardTitle className="text-lg text-gold font-medium mb-2">Comment fonctionne le paiement ?</CardTitle>
                                     <CardDescription className="text-gray-300">
-                                        Le paiement est mensuel et automatique via carte bancaire. Vous recevez une facture par email chaque mois.
+                                        Envoyez 10 000 FCFA par Wave ou Orange Money au 07 07 75 62 97, puis contactez-nous sur WhatsApp avec votre preuve de paiement. Activation sous 24h.
                                     </CardDescription>
                                 </CardHeader>
                             </Card>

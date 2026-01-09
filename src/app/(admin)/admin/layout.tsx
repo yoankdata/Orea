@@ -44,8 +44,8 @@ export default async function AdminLayout({
     return (
         <div className="min-h-screen bg-surface">
             {/* Header Admin */}
-            <div className="sticky top-16 z-40 bg-anthracite text-white border-b border-white/10">
-                <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div className="bg-anthracite text-white border-b border-white/10">
+                <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <Shield className="h-5 w-5 text-gold" />
                         <h1 className="font-serif text-xl font-semibold">
@@ -71,11 +71,11 @@ export default async function AdminLayout({
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 py-6">
-                <div className="flex gap-6">
+            <div className="container mx-auto px-4 py-8 md:py-10">
+                <div className="flex gap-6 md:gap-8">
                     {/* Sidebar */}
                     <aside className="hidden md:block w-64 shrink-0">
-                        <div className="sticky top-36">
+                        <div className="sticky top-24">
                             <nav className="space-y-1 bg-white rounded-xl p-4 shadow-sm">
                                 <Link
                                     href="/admin"

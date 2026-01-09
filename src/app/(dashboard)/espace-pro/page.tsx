@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 /**
  * Page par défaut /account
- * Affiche un message de succès après paiement Stripe
+ * Affiche un message de succès après activation NUBI GOLD
  * Sinon redirige vers le profil
  */
 export default function AccountPage() {

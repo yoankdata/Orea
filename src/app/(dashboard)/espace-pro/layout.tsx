@@ -46,8 +46,8 @@ export default async function DashboardLayout({
     return (
         <div className="min-h-screen bg-surface">
             {/* Header Dashboard */}
-            <div className="sticky top-16 z-40 bg-white border-b border-border">
-                <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div className="bg-white border-b border-border">
+                <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         {/* Menu mobile */}
                         <Sheet>
@@ -99,11 +99,11 @@ export default async function DashboardLayout({
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 py-6">
-                <div className="flex gap-6">
+            <div className="container mx-auto px-4 py-8 md:py-10">
+                <div className="flex gap-6 md:gap-8">
                     {/* Sidebar (desktop) */}
                     <aside className="hidden md:block w-64 shrink-0">
-                        <div className="sticky top-36">
+                        <div className="sticky top-24">
                             <DashboardNav />
                         </div>
                     </aside>

@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://orea.ci';
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://maisonnubi.ci';
 
 /**
  * Génère le fichier robots.txt

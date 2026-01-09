@@ -15,7 +15,7 @@ export default function TermsPage() {
     return (
         <div className="min-h-screen bg-white">
             {/* Header Minimaliste */}
-            <div className="w-full bg-orea-gradient py-20 md:py-32 relative overflow-hidden">
+            <div className="w-full bg-maison-nubi-gradient py-20 md:py-32 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-1/3 h-full bg-[url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2940&auto=format&fit=crop')] bg-cover bg-center opacity-10 blur-sm" />
                 <div className="container mx-auto px-6 relative z-10 text-center">
                     <span className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4 block">
@@ -115,9 +115,8 @@ export default function TermsPage() {
                         Paiements
                     </h2>
                     <p>
-                        L'abonnement NUBI GOLD est facturé mensuellement via notre partenaire de
-                        paiement sécurisé Stripe. Vous pouvez annuler votre abonnement à tout moment.
-                        Les paiements sont sécurisés et conformes aux normes PCI-DSS.
+                        L'abonnement NUBI GOLD est payable mensuellement via Mobile Money (Wave ou Orange Money).
+                        Les paiements sont effectués au numéro 07 07 75 62 97. L'activation se fait sous 24h après réception du paiement.
                     </p>
 
                     <h2 className="flex items-center gap-3 text-2xl mt-12">

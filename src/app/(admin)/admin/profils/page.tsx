@@ -1,141 +1,129 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-    Search,
     CheckCircle,
     XCircle,
     Clock,
+    Eye,
+    Search,
     Crown,
-    ExternalLink,
     Loader2,
-    Filter,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { supabase } from "@/lib/supabase";
-import type { Profile, ProfileStatus } from "@/lib/database.types";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-// Labels des catégories
-const categoryLabels: Record<string, string> = {
-    coiffure: "Coiffure",
-    makeup: "Maquillage",
-    ongles: "Ongles",
-    soins: "Soins",
-    barber: "Barber",
+type Profile = {
+    id: string;
+    full_name: string;
+    email: string;
+    slug: string;
+    category: string;
+    city: string;
+    neighborhood: string | null;
+    status: "active" | "pending" | "banned";
+    is_premium: boolean;
+    avatar_url: string | null;
+    created_at: string;
 };
 
-// Labels des statuts
-const statusConfig: Record<ProfileStatus, { label: string; color: string; icon: React.ElementType }> = {
-    active: { label: "Actif", color: "bg-green-100 text-green-700", icon: CheckCircle },
-    pending: { label: "En attente", color: "bg-amber-100 text-amber-700", icon: Clock },
-    banned: { label: "Banni", color: "bg-red-100 text-red-700", icon: XCircle },
+const getCategoryLabel = (category: string) => {
+    const labels: Record<string, string> = {
+        coiffure: "Coiffure",
+        makeup: "Maquillage",
+        ongles: "Ongles",
+        soins: "Soins",
+        barber: "Barber",
+    };
+    return labels[category] || category;
 };
 
-/**
- * Page de modération des profils
- * Liste tous les profils avec possibilité de changer leur statut
- */
+const getStatusColor = (status: string) => {
+    switch (status) {
+        case "active":
+            return "bg-green-100 text-green-700 border-green-200";
+        case "pending":
+            return "bg-amber-100 text-amber-700 border-amber-200";
+        case "banned":
+            return "bg-red-100 text-red-700 border-red-200";
+        default:
+            return "bg-gray-100 text-gray-700 border-gray-200";
+    }
+};
+
 export default function AdminProfilesPage() {
     const searchParams = useSearchParams();
-    const initialStatus = searchParams.get("status") as ProfileStatus | null;
-
     const [profiles, setProfiles] = useState<Profile[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
-    const [statusFilter, setStatusFilter] = useState<ProfileStatus | "all">(initialStatus || "all");
-    const [updatingId, setUpdatingId] = useState<string | null>(null);
+    const [statusFilter, setStatusFilter] = useState<string>(
+        searchParams.get("status") || "all"
+    );
+    const [categoryFilter, setCategoryFilter] = useState("all");
 
-    // Charger les profils
+    // Chargement des profils
     useEffect(() => {
-        async function fetchProfiles() {
-            if (!supabase) return;
+        loadProfiles();
+    }, [statusFilter, categoryFilter]);
 
-            setIsLoading(true);
-
-            let query = supabase
-                .from("profiles")
-                .select("*")
-                .order("created_at", { ascending: false });
-
-            if (statusFilter !== "all") {
-                query = query.eq("status", statusFilter);
-            }
-
-            if (searchQuery) {
-                query = query.or(
-                    `full_name.ilike.%${searchQuery}%,email.ilike.%${searchQuery}%,city.ilike.%${searchQuery}%`
-                );
-            }
-
-            const { data, error } = await query;
-
-            if (error) {
-                console.error("Erreur chargement profils:", error);
-            } else {
-                setProfiles((data as unknown as Profile[]) || []);
-            }
-
-            setIsLoading(false);
-        }
-
-        fetchProfiles();
-    }, [statusFilter, searchQuery]);
-
-    // Changer le statut d'un profil
-    const updateStatus = async (profileId: string, newStatus: ProfileStatus) => {
+    const loadProfiles = async () => {
         if (!supabase) return;
 
-        setUpdatingId(profileId);
+        setLoading(true);
+
+        let query = supabase
+            .from("profiles")
+            .select("*")
+            .order("created_at", { ascending: false });
+
+        // Filtres
+        if (statusFilter !== "all") {
+            query = query.eq("status", statusFilter);
+        }
+
+        if (categoryFilter !== "all") {
+            query = query.eq("category", categoryFilter);
+        }
+
+        const { data, error } = await query;
+
+        if (!error && data) {
+            setProfiles(data as Profile[]);
+        }
+
+        setLoading(false);
+    };
+
+    // Actions de modération
+    const updateProfileStatus = async (
+        profileId: string,
+        newStatus: "active" | "pending" | "banned"
+    ) => {
+        if (!supabase) return;
 
         const { error } = await supabase
             .from("profiles")
-            .update({ status: newStatus } as never)
+            .update({ status: newStatus })
             .eq("id", profileId);
 
-        if (error) {
-            console.error("Erreur mise à jour statut:", error);
-            alert("Erreur lors de la mise à jour du statut");
-        } else {
-            // Mettre à jour localement
-            setProfiles(prev =>
-                prev.map(p =>
-                    p.id === profileId ? { ...p, status: newStatus } : p
-                )
-            );
+        if (!error) {
+            // Recharger la liste
+            loadProfiles();
         }
-
-        setUpdatingId(null);
     };
 
-    // Initiales pour l'avatar
-    const getInitials = (name: string) =>
-        name
-            .split(" ")
-            .map((n) => n[0])
-            .join("")
-            .toUpperCase()
-            .slice(0, 2);
+    // Filtrer par recherche
+    const filteredProfiles = profiles.filter((profile) =>
+        profile.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        profile.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div className="space-y-6">
@@ -145,178 +133,208 @@ export default function AdminProfilesPage() {
                     Modération des Profils
                 </h1>
                 <p className="text-muted-foreground">
-                    Gérez les profils prestataires de la plateforme
+                    Gérez et modérez les profils prestataires
                 </p>
             </div>
 
             {/* Filtres */}
-            <div className="flex flex-col sm:flex-row gap-4">
-                {/* Recherche */}
-                <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                        placeholder="Rechercher par nom, email, ville..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-10"
-                    />
+            <Card>
+                <CardContent className="pt-6">
+                    <div className="flex flex-col md:flex-row gap-4">
+                        {/* Recherche */}
+                        <div className="flex-1 relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder="Rechercher par nom ou email..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="pl-10"
+                            />
+                        </div>
+
+                        {/* Filtre statut */}
+                        <Select
+                            value={statusFilter}
+                            onValueChange={setStatusFilter}
+                        >
+                            <SelectTrigger className="w-full md:w-[200px]">
+                                <SelectValue placeholder="Statut" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">Tous les statuts</SelectItem>
+                                <SelectItem value="pending">En attente</SelectItem>
+                                <SelectItem value="active">Actifs</SelectItem>
+                                <SelectItem value="banned">Bannis</SelectItem>
+                            </SelectContent>
+                        </Select>
+
+                        {/* Filtre catégorie */}
+                        <Select
+                            value={categoryFilter}
+                            onValueChange={setCategoryFilter}
+                        >
+                            <SelectTrigger className="w-full md:w-[200px]">
+                                <SelectValue placeholder="Catégorie" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">Toutes les catégories</SelectItem>
+                                <SelectItem value="coiffure">Coiffure</SelectItem>
+                                <SelectItem value="makeup">Maquillage</SelectItem>
+                                <SelectItem value="ongles">Ongles</SelectItem>
+                                <SelectItem value="soins">Soins</SelectItem>
+                                <SelectItem value="barber">Barber</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </CardContent>
+            </Card>
+
+            {/* Liste des profils */}
+            {loading ? (
+                <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 animate-spin text-gold" />
                 </div>
-
-                {/* Filtre par statut */}
-                <Select
-                    value={statusFilter}
-                    onValueChange={(v) => setStatusFilter(v as ProfileStatus | "all")}
-                >
-                    <SelectTrigger className="w-[180px]">
-                        <Filter className="mr-2 h-4 w-4" />
-                        <SelectValue placeholder="Filtrer par statut" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all">Tous les statuts</SelectItem>
-                        <SelectItem value="active">Actifs</SelectItem>
-                        <SelectItem value="pending">En attente</SelectItem>
-                        <SelectItem value="banned">Bannis</SelectItem>
-                    </SelectContent>
-                </Select>
-            </div>
-
-            {/* Tableau des profils */}
-            <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
-                {isLoading ? (
-                    <div className="flex items-center justify-center py-12">
-                        <Loader2 className="h-8 w-8 animate-spin text-gold" />
-                    </div>
-                ) : profiles.length === 0 ? (
-                    <div className="text-center py-12 text-muted-foreground">
+            ) : filteredProfiles.length === 0 ? (
+                <Card>
+                    <CardContent className="py-12 text-center text-muted-foreground">
                         Aucun profil trouvé
-                    </div>
-                ) : (
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Prestataire</TableHead>
-                                <TableHead>Catégorie</TableHead>
-                                <TableHead>Ville</TableHead>
-                                <TableHead>Statut</TableHead>
-                                <TableHead>Premium</TableHead>
-                                <TableHead className="text-right">Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {profiles.map((profile) => {
-                                const StatusIcon = statusConfig[profile.status].icon;
-                                return (
-                                    <TableRow key={profile.id}>
-                                        {/* Prestataire */}
-                                        <TableCell>
-                                            <div className="flex items-center gap-3">
-                                                <Avatar className="h-10 w-10">
-                                                    <AvatarImage src={profile.avatar_url || undefined} />
-                                                    <AvatarFallback className="bg-gold/10 text-gold font-medium">
-                                                        {getInitials(profile.full_name)}
-                                                    </AvatarFallback>
-                                                </Avatar>
-                                                <div>
-                                                    <p className="font-medium text-anthracite">
-                                                        {profile.full_name}
-                                                    </p>
-                                                    <p className="text-xs text-muted-foreground">
-                                                        {profile.email}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </TableCell>
+                    </CardContent>
+                </Card>
+            ) : (
+                <div className="space-y-3">
+                    {filteredProfiles.map((profile) => (
+                        <Card
+                            key={profile.id}
+                            className="hover:shadow-md transition-shadow"
+                        >
+                            <CardContent className="p-6">
+                                <div className="flex items-center gap-4">
+                                    {/* Avatar */}
+                                    <Avatar className="h-12 w-12">
+                                        <AvatarImage src={profile.avatar_url || undefined} />
+                                        <AvatarFallback className="bg-gold/10 text-gold font-semibold">
+                                            {profile.full_name.substring(0, 2).toUpperCase()}
+                                        </AvatarFallback>
+                                    </Avatar>
 
-                                        {/* Catégorie */}
-                                        <TableCell>
-                                            <Badge variant="outline">
-                                                {categoryLabels[profile.category]}
-                                            </Badge>
-                                        </TableCell>
-
-                                        {/* Ville */}
-                                        <TableCell className="text-muted-foreground">
-                                            {profile.city}
-                                        </TableCell>
-
-                                        {/* Statut */}
-                                        <TableCell>
-                                            <Badge className={statusConfig[profile.status].color}>
-                                                <StatusIcon className="mr-1 h-3 w-3" />
-                                                {statusConfig[profile.status].label}
-                                            </Badge>
-                                        </TableCell>
-
-                                        {/* Premium */}
-                                        <TableCell>
-                                            {profile.is_premium ? (
-                                                <Crown className="h-5 w-5 text-gold" />
-                                            ) : (
-                                                <span className="text-muted-foreground">-</span>
+                                    {/* Infos */}
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <h3 className="font-semibold text-anthracite truncate">
+                                                {profile.full_name}
+                                            </h3>
+                                            {profile.is_premium && (
+                                                <Crown className="h-4 w-4 text-gold flex-shrink-0" />
                                             )}
-                                        </TableCell>
+                                        </div>
+                                        <p className="text-sm text-muted-foreground truncate">
+                                            {profile.email}
+                                        </p>
+                                        <div className="flex flex-wrap gap-2 mt-2">
+                                            <Badge variant="outline" className="text-xs">
+                                                {getCategoryLabel(profile.category)}
+                                            </Badge>
+                                            <Badge variant="outline" className="text-xs">
+                                                {profile.city}
+                                                {profile.neighborhood && ` - ${profile.neighborhood}`}
+                                            </Badge>
+                                        </div>
+                                    </div>
 
-                                        {/* Actions */}
-                                        <TableCell className="text-right">
-                                            <div className="flex items-center justify-end gap-2">
-                                                {/* Voir le profil */}
-                                                <Button
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    asChild
-                                                    className="h-8 w-8"
+                                    {/* Statut & Actions */}
+                                    <div className="flex flex-col md:flex-row items-end md:items-center gap-3">
+                                        <Badge
+                                            className={`${getStatusColor(profile.status)} border`}
+                                        >
+                                            {profile.status === "active" && "Actif"}
+                                            {profile.status === "pending" && "En attente"}
+                                            {profile.status === "banned" && "Banni"}
+                                        </Badge>
+
+                                        <div className="flex gap-2">
+                                            {/* Voir le profil */}
+                                            <Button
+                                                asChild
+                                                variant="ghost"
+                                                size="sm"
+                                                className="h-8 w-8 p-0"
+                                            >
+                                                <Link
+                                                    href={`/prestataire/${profile.slug}`}
+                                                    target="_blank"
                                                 >
-                                                    <Link
-                                                        href={`/prestataire/${profile.slug}`}
-                                                        target="_blank"
+                                                    <Eye className="h-4 w-4" />
+                                                </Link>
+                                            </Button>
+
+                                            {/* Actions selon le statut */}
+                                            {profile.status === "pending" && (
+                                                <>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="h-8 bg-green-50 border-green-200 text-green-700 hover:bg-green-100"
+                                                        onClick={() =>
+                                                            updateProfileStatus(profile.id, "active")
+                                                        }
                                                     >
-                                                        <ExternalLink className="h-4 w-4" />
-                                                    </Link>
+                                                        <CheckCircle className="h-3 w-3 mr-1" />
+                                                        Valider
+                                                    </Button>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="h-8 bg-red-50 border-red-200 text-red-700 hover:bg-red-100"
+                                                        onClick={() =>
+                                                            updateProfileStatus(profile.id, "banned")
+                                                        }
+                                                    >
+                                                        <XCircle className="h-3 w-3 mr-1" />
+                                                        Rejeter
+                                                    </Button>
+                                                </>
+                                            )}
+
+                                            {profile.status === "active" && (
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    className="h-8 bg-red-50 border-red-200 text-red-700 hover:bg-red-100"
+                                                    onClick={() =>
+                                                        updateProfileStatus(profile.id, "banned")
+                                                    }
+                                                >
+                                                    <XCircle className="h-3 w-3 mr-1" />
+                                                    Bannir
                                                 </Button>
+                                            )}
 
-                                                {/* Boutons de modération */}
-                                                {updatingId === profile.id ? (
-                                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                                ) : (
-                                                    <>
-                                                        {profile.status !== "active" && (
-                                                            <Button
-                                                                variant="ghost"
-                                                                size="sm"
-                                                                onClick={() => updateStatus(profile.id, "active")}
-                                                                className="text-green-600 hover:text-green-700 hover:bg-green-50"
-                                                            >
-                                                                <CheckCircle className="mr-1 h-4 w-4" />
-                                                                Activer
-                                                            </Button>
-                                                        )}
-                                                        {profile.status !== "banned" && (
-                                                            <Button
-                                                                variant="ghost"
-                                                                size="sm"
-                                                                onClick={() => updateStatus(profile.id, "banned")}
-                                                                className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                                                            >
-                                                                <XCircle className="mr-1 h-4 w-4" />
-                                                                Bannir
-                                                            </Button>
-                                                        )}
-                                                    </>
-                                                )}
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                )}
+                                            {profile.status === "banned" && (
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    className="h-8 bg-green-50 border-green-200 text-green-700 hover:bg-green-100"
+                                                    onClick={() =>
+                                                        updateProfileStatus(profile.id, "active")
+                                                    }
+                                                >
+                                                    <CheckCircle className="h-3 w-3 mr-1" />
+                                                    Réactiver
+                                                </Button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            )}
+
+            {/* Résumé */}
+            <div className="text-sm text-muted-foreground text-center">
+                {filteredProfiles.length} profil(s) trouvé(s)
             </div>
-
-            {/* Compteur */}
-            <p className="text-sm text-muted-foreground text-center">
-                {profiles.length} profil{profiles.length > 1 ? "s" : ""} affiché{profiles.length > 1 ? "s" : ""}
-            </p>
         </div>
     );
 }

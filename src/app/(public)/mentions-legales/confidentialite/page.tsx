@@ -15,7 +15,7 @@ export default function PrivacyPage() {
     return (
         <div className="min-h-screen bg-white">
             {/* Header Minimaliste */}
-            <div className="w-full bg-orea-gradient py-20 md:py-32 relative overflow-hidden">
+            <div className="w-full bg-maison-nubi-gradient py-20 md:py-32 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-1/3 h-full bg-[url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10 blur-sm mix-blend-multiply" />
                 <div className="container mx-auto px-6 relative z-10 text-center">
                     <span className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4 block">
@@ -88,7 +88,7 @@ export default function PrivacyPage() {
                     </div>
 
                     <p className="text-sm text-muted-foreground italic bg-gray-50 p-4 rounded-lg border border-gray-100">
-                        Note : Les paiements sont traités par Stripe. Nous ne stockons jamais vos informations bancaires sur nos serveurs.
+                        Note : Les paiements se font par Mobile Money (Wave/Orange Money). Nous ne stockons aucune information bancaire.
                     </p>
 
                     <h2 className="flex items-center gap-3 text-2xl mt-12">
@@ -115,7 +115,6 @@ export default function PrivacyPage() {
                     </p>
                     <ul>
                         <li><strong>Supabase</strong> : Hébergement sécurisé des données</li>
-                        <li><strong>Stripe</strong> : Traitement sécurisé des paiements</li>
                         <li><strong>Vercel</strong> : Hébergement de l'infrastructure web</li>
                     </ul>
 
